@@ -9,13 +9,13 @@ import java.util.List;
  * Time:2019/1/31 0031
  */
 public class MainListBean extends ResultBean {
-    private List<MainListItem> list;
+    private List<MainListItem> data;
 
     public List<MainListItem> getList() {
-        return list;
+        return data;
     }
 
     public void setList(List<MainListItem> list) {
-        this.list = list;
+        this.data = list;
     }
 }

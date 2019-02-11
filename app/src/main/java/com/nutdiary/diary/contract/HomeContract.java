@@ -5,6 +5,8 @@ import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.MainListItem;
 import com.nutdiary.diary.bean.UploadBean;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 
@@ -14,7 +16,7 @@ import okhttp3.MultipartBody;
  */
 public class HomeContract {
     public interface HomeView extends BaseView{
-
+        void changeList(List<MainListItem> mainListItems);
     }
 
     public interface HomeModel {

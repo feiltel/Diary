@@ -7,6 +7,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,18 +16,35 @@ import android.view.View;
 
 import com.nutdiary.diary.R;
 import com.nutdiary.diary.base.BaseActivity;
+import com.nutdiary.diary.base.BaseRecyclerView.CommonAdapter;
+import com.nutdiary.diary.base.BaseRecyclerView.baseIn.ViewHolder;
+import com.nutdiary.diary.bean.MainListItem;
 import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.presenter.HomePresenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeContract.HomeView {
     private HomePresenter homePresenter;
-
+    private CommonAdapter<MainListItem> commonAdapter;
+    private List<MainListItem> mainListItemList=new ArrayList<>();
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        recyclerView=findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        commonAdapter=new CommonAdapter<MainListItem>(this,R.layout.main_list_item,mainListItemList) {
+            @Override
+            protected void convert(ViewHolder holder, MainListItem mainListItem, int position) {
+                holder.setText(R.id.text,mainListItem.getContent());
+            }
+        };
+        recyclerView.setAdapter(commonAdapter);
         homePresenter = new HomePresenter(this, this);
         initView();
 
@@ -125,5 +144,11 @@ public class HomeActivity extends BaseActivity
     @Override
     public void hideLoadDialog() {
         myLoadDialog.hide();
+    }
+
+    @Override
+    public void changeList(List<MainListItem> mainListItems) {
+        mainListItemList.addAll(mainListItems);
+        commonAdapter.notifyDataSetChanged();
     }
 }

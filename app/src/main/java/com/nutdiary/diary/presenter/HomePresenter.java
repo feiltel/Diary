@@ -31,8 +31,10 @@ public class HomePresenter extends BasePresenter {
                 .subscribe(new DefaultObserver<MainListBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull MainListBean mainListBean) {
-                        homeView.showToast(mainListBean.getMsg());
+                        homeView.changeList(mainListBean.getList());
+                        homeView.showToast(mainListBean.getList().get(0).getContent());
                         homeView.hideLoadDialog();
+
                     }
 
                     @Override
