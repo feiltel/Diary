@@ -1,14 +1,13 @@
 package com.nutdiary.diary.view;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.Toast;
 
 import com.nutdiary.diary.R;
 import com.nutdiary.diary.base.BaseActivity;
 import com.nutdiary.diary.bean.MainListItem;
+import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.MainContract;
 import com.nutdiary.diary.presenter.MainPresenter;
 
@@ -19,16 +18,12 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements MainContract.MainView {
 
     private MainPresenter mainPresenter;
-    private ProgressDialog dialog;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        dialog = new ProgressDialog(MainActivity.this);
-        dialog.setMax(100);
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        dialog.setMessage("上传文件中");
 
         mainPresenter = new MainPresenter(this, this);
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
@@ -40,7 +35,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainListItem mainListItem=new MainListItem();
+                MainListItem mainListItem = new MainListItem();
                 mainListItem.setType(1);
                 mainListItem.setContent("这是我的第一篇日记");
                 mainListItem.setDateStr("2019.1.31");
@@ -64,7 +59,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 String path2 = Environment.getExternalStorageDirectory() + File.separator + "test2.png";
                 String path3 = Environment.getExternalStorageDirectory() + File.separator + "test3.png";
 
-                List<File> fileList=new ArrayList<>();
+                List<File> fileList = new ArrayList<>();
                 fileList.add(new File(path));
                 fileList.add(new File(path1));
                 fileList.add(new File(path2));
@@ -77,27 +72,27 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        MyToast.showToast(msg);
     }
 
     @Override
     public void showDialog() {
-        dialog.show();
+        myLoadDialog.show();
     }
 
     @Override
     public void dismissDialog() {
-        dialog.dismiss();
+        myLoadDialog.hide();
     }
 
     @Override
     public void showProgress(int progress) {
-        dialog.setProgress(progress);
+
     }
 
     @Override
     public void setDialogMsg(String msg) {
-        dialog.setMessage(msg);
+
     }
 
 }

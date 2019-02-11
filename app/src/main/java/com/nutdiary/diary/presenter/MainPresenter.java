@@ -39,6 +39,7 @@ public class MainPresenter extends BasePresenter {
     /**
      */
     public void getListData(String token) {
+        mainView.showDialog();
         mainModel.getMainListData(token)
                 .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
                 .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
@@ -47,6 +48,7 @@ public class MainPresenter extends BasePresenter {
                     @Override
                     public void onNext(@NonNull MainListBean mainListBean) {
                         mainView.showToast(mainListBean.getMsg());
+                        mainView.dismissDialog();
                     }
 
                     @Override
@@ -164,8 +166,6 @@ public class MainPresenter extends BasePresenter {
                         if (uploadBean != null) {
                             mainView.showToast(uploadBean.getMsg());
                         }
-
-
                         mainView.setDialogMsg(nowUploadIndex + 1 + "/" + countSum);
                         mainView.showProgress(0);
                         nowUploadIndex++;
