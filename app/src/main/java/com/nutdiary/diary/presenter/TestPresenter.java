@@ -6,8 +6,7 @@ import com.nutdiary.diary.base.BasePresenter;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.MainListItem;
 import com.nutdiary.diary.bean.UploadBean;
-import com.nutdiary.diary.contract.MainContract;
-import com.nutdiary.diary.model.MainModel;
+import com.nutdiary.diary.contract.AddDiaryContract;
 import com.nutdiary.diary.network.UploadFileRequestBody;
 import com.nutdiary.diary.network.UploadObserver;
 import com.trello.rxlifecycle2.LifecycleProvider;
@@ -25,19 +24,19 @@ import io.reactivex.functions.Function;
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
+/*
+public class TestPresenter extends BasePresenter {
+    private AddDiaryContract.AddDiaryView mainView;
+    private AddDiaryContract.AddDiaryModel mainModel;
 
-public class MainPresenter extends BasePresenter {
-    private MainContract.MainView mainView;
-    private MainContract.MainModel mainModel;
-
-    public MainPresenter(MainContract.MainView mainView, LifecycleProvider<ActivityEvent> provider) {
+    public TestPresenter(AddDiaryContract.AddDiaryView mainView, LifecycleProvider<ActivityEvent> provider) {
         super(provider);
         this.mainView = mainView;
-        mainModel = new MainModel();
+        mainModel = new com.nutdiary.diary.model.AddDiaryModel();
     }
 
-    /**
-     */
+    *//**
+     *//*
     public void getListData(String token) {
         mainView.showDialog();
         mainModel.getMainListData(token)
@@ -90,8 +89,8 @@ public class MainPresenter extends BasePresenter {
 
         mainView.showDialog();
         mainView.showProgress(0);
-        /*RequestBody requestFile =
-                RequestBody.create(MediaType.parse("application/otcet-stream"), file);*/
+        *//*RequestBody requestFile =
+                RequestBody.create(MediaType.parse("application/otcet-stream"), file);*//*
 
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("file", file.getName(),
@@ -144,7 +143,7 @@ public class MainPresenter extends BasePresenter {
                         return getUploadBeanObservable(file);
                     }
                 })
-                /* .onErrorReturnItem(new UploadBean())*/
+                *//* .onErrorReturnItem(new UploadBean())*//*
                 //处理文件上传出错
                 .onErrorResumeNext(new ObservableSource<UploadBean>() {
                     @Override
@@ -201,4 +200,4 @@ public class MainPresenter extends BasePresenter {
     }
 
 
-}
+}*/

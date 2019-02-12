@@ -1,5 +1,6 @@
 package com.nutdiary.diary.contract;
 
+import com.nutdiary.diary.base.BaseView;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.MainListItem;
 import com.nutdiary.diary.bean.UploadBean;
@@ -11,17 +12,13 @@ import okhttp3.MultipartBody;
  * Author:Administrator
  * Time:2019/1/31 0031
  */
-public class MainContract {
-    public interface MainView {
-        void showToast(String msg);
-        void showDialog();
-        void dismissDialog();
-        void showProgress(int progress);
-        void setDialogMsg(String msg);
+public class AddDiaryContract {
+    public interface AddDiaryView extends BaseView {
+
     }
 
-    public interface MainModel {
-        Observable<MainListBean> getMainListData(String token);
+    public interface AddDiaryModel {
+
 
         Observable<MainListBean> saveItemData(MainListItem mainListItem);
 

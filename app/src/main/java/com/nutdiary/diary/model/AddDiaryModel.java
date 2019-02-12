@@ -3,7 +3,7 @@ package com.nutdiary.diary.model;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.MainListItem;
 import com.nutdiary.diary.bean.UploadBean;
-import com.nutdiary.diary.contract.MainContract;
+import com.nutdiary.diary.contract.AddDiaryContract;
 import com.nutdiary.diary.network.RetrofitHelper;
 import com.nutdiary.diary.network.RetrofitService;
 
@@ -14,17 +14,13 @@ import okhttp3.MultipartBody;
  * Author:Administrator
  * Time:2019/1/31 0031
  */
-public class MainModel implements MainContract.MainModel {
+public class AddDiaryModel implements AddDiaryContract.AddDiaryModel {
     private RetrofitService retrofitService;
 
-    public MainModel() {
+    public AddDiaryModel() {
         retrofitService = RetrofitHelper.getInstance().getRetrofitService();
     }
 
-    @Override
-    public Observable<MainListBean> getMainListData(String token) {
-        return retrofitService.getMainListData(token);
-    }
 
     @Override
     public Observable<MainListBean> saveItemData(MainListItem mainListItem) {

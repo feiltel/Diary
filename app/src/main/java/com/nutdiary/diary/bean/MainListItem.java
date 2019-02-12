@@ -6,6 +6,14 @@ package com.nutdiary.diary.bean;
  */
 public class MainListItem {
     private String dateStr;
+
+    public MainListItem(String dateStr, String content, int type, String weather) {
+        this.dateStr = dateStr;
+        this.content = content;
+        this.type = type;
+        this.weather = weather;
+    }
+
     private String content;
     private int type;
 
