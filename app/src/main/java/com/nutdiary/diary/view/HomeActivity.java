@@ -97,7 +97,7 @@ public class HomeActivity extends BaseActivity
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                homePresenter.getListData("123");
+                homePresenter.getFirstListData("123");
 
             }
         });
@@ -206,11 +206,21 @@ public class HomeActivity extends BaseActivity
     }
 
     @Override
-    public void changeList(List<MainListItem> mainListItems) {
-        refreshLayout.finishRefresh(2000);
-        refreshLayout.finishLoadMore(2000);
+    public void addList(List<MainListItem> mainListItems) {
+
+        refreshLayout.finishRefresh();
+        refreshLayout.finishLoadMore();
         mainListItemList.addAll(mainListItems);
         commonAdapter.notifyItemRangeInserted(mainListItemList.size(),mainListItems.size());
 
+    }
+
+    @Override
+    public void firstList(List<MainListItem> mainListItems) {
+        refreshLayout.finishRefresh();
+        refreshLayout.finishLoadMore();
+        mainListItemList.clear();
+        mainListItemList.addAll(mainListItems);
+        commonAdapter.notifyDataSetChanged();
     }
 }

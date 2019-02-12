@@ -16,7 +16,8 @@ import okhttp3.MultipartBody;
  */
 public class HomeContract {
     public interface HomeView extends BaseView{
-        void changeList(List<MainListItem> mainListItems);
+        void addList(List<MainListItem> mainListItems);
+        void firstList(List<MainListItem> mainListItems);
     }
 
     public interface HomeModel {

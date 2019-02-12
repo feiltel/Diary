@@ -23,7 +23,7 @@ public class HomePresenter extends BasePresenter {
         homeModel=new HomeModel();
     }
     public void getListData(String token) {
-        homeView.showLoadDialog();
+
         homeModel.getMainListData(token)
                 .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
                 .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
@@ -31,10 +31,30 @@ public class HomePresenter extends BasePresenter {
                 .subscribe(new DefaultObserver<MainListBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull MainListBean mainListBean) {
+                        homeView.addList(mainListBean.getList());
+                    }
 
-                        homeView.changeList(mainListBean.getList());
+                    @Override
+                    public void onError(@NonNull Throwable e) {
                         homeView.hideLoadDialog();
+                    }
 
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    public void getFirstListData(String token) {
+
+        homeModel.getMainListData(token)
+                .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
+                .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
+                .compose(getProvider().<MainListBean>bindUntilEvent(ActivityEvent.DESTROY))// onDestroy取消订阅
+                .subscribe(new DefaultObserver<MainListBean>() {  // 订阅
+                    @Override
+                    public void onNext(@NonNull MainListBean mainListBean) {
+                        homeView.firstList(mainListBean.getList());
                     }
 
                     @Override
