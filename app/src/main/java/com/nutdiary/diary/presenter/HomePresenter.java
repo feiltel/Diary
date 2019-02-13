@@ -4,14 +4,25 @@ import android.support.annotation.NonNull;
 
 import com.nutdiary.diary.base.BasePresenter;
 import com.nutdiary.diary.bean.MainListBean;
+import com.nutdiary.diary.bean.UploadBean;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.model.HomeModel;
+import com.nutdiary.diary.network.UploadFileRequestBody;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
+import java.io.File;
+import java.util.List;
+import java.util.function.Function;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 
 public class HomePresenter extends BasePresenter {
     private HomeContract.HomeView homeView;
@@ -36,7 +47,8 @@ public class HomePresenter extends BasePresenter {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        homeView.hideLoadDialog();
+                        homeView.addFail();
+                        homeView.showToast(e.toString());
                     }
 
                     @Override
@@ -59,7 +71,8 @@ public class HomePresenter extends BasePresenter {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        homeView.hideLoadDialog();
+                        homeView.firstFail();
+                        homeView.showToast(e.toString());
                     }
 
                     @Override
@@ -68,4 +81,6 @@ public class HomePresenter extends BasePresenter {
                     }
                 });
     }
+
+
 }

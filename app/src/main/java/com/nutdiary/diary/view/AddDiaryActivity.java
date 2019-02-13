@@ -10,12 +10,25 @@ import android.widget.TextView;
 import com.nutdiary.diary.R;
 import com.nutdiary.diary.base.BaseActivity;
 import com.nutdiary.diary.bean.MainListItem;
+import com.nutdiary.diary.bean.UploadBean;
 import com.nutdiary.diary.contract.AddDiaryContract;
+import com.nutdiary.diary.network.UploadFileRequestBody;
 import com.nutdiary.diary.presenter.AddDiaryPresenter;
+
+import java.io.File;
+import java.util.List;
+import java.util.function.Function;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 
 public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.AddDiaryView {
 
@@ -38,6 +51,8 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
         initView();
 
     }
+
+
 
     private void initView() {
         initToolBar();

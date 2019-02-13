@@ -17,7 +17,10 @@ import okhttp3.MultipartBody;
 public class HomeContract {
     public interface HomeView extends BaseView{
         void addList(List<MainListItem> mainListItems);
+        void addFail();
         void firstList(List<MainListItem> mainListItems);
+        void firstFail();
+
     }
 
     public interface HomeModel {

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nutdiary.diary.R;
@@ -108,7 +109,7 @@ public class HomeActivity extends BaseActivity
             }
         });
         refreshLayout.setRefreshHeader(new DeliveryHeader(this));
-        refreshLayout.setRefreshFooter(new BallPulseFooter(this));
+        refreshLayout.setRefreshFooter(new BallPulseFooter(this), ViewGroup.LayoutParams.MATCH_PARENT,32);
     }
 
     private void initView() {
@@ -202,13 +203,14 @@ public class HomeActivity extends BaseActivity
 
     @Override
     public void hideLoadDialog() {
+
+
         myLoadDialog.hide();
     }
 
     @Override
     public void addList(List<MainListItem> mainListItems) {
 
-        refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
         mainListItemList.addAll(mainListItems);
         commonAdapter.notifyItemRangeInserted(mainListItemList.size(),mainListItems.size());
@@ -216,11 +218,23 @@ public class HomeActivity extends BaseActivity
     }
 
     @Override
+    public void addFail() {
+        refreshLayout.finishLoadMore();
+
+    }
+
+    @Override
     public void firstList(List<MainListItem> mainListItems) {
         refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMore();
         mainListItemList.clear();
         mainListItemList.addAll(mainListItems);
         commonAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void firstFail() {
+        refreshLayout.finishRefresh();
+
+
     }
 }

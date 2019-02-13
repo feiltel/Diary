@@ -1,29 +1,26 @@
 package com.nutdiary.diary.presenter;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.nutdiary.diary.base.BasePresenter;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.MainListItem;
-import com.nutdiary.diary.bean.UploadBean;
 import com.nutdiary.diary.contract.AddDiaryContract;
-import com.nutdiary.diary.network.UploadFileRequestBody;
-import com.nutdiary.diary.network.UploadObserver;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
-import java.io.File;
-import java.util.List;
+import java.util.Random;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MultipartBody;
 
 public class AddDiaryPresenter extends BasePresenter {
     private AddDiaryContract.AddDiaryView mainView;
@@ -57,12 +54,22 @@ public class AddDiaryPresenter extends BasePresenter {
                         mainView.showToast("onComplete");
                     }
                 });
+
+        Random random = new Random();
+        Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+
+                emitter.onNext(random.nextInt());
+                emitter.onNext(random.nextInt());
+                emitter.onNext(random.nextInt());
+                emitter.onError(new Exception());
+                emitter.onNext(random.nextInt());
+                emitter.onNext(random.nextInt());
+            }
+        });
+
     }
-
-
-
-
-
 
 
 }

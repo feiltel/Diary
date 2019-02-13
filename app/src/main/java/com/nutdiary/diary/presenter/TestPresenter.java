@@ -35,8 +35,7 @@ public class TestPresenter extends BasePresenter {
         mainModel = new com.nutdiary.diary.model.AddDiaryModel();
     }
 
-    *//**
-     *//*
+
     public void getListData(String token) {
         mainView.showDialog();
         mainModel.getMainListData(token)
@@ -89,7 +88,7 @@ public class TestPresenter extends BasePresenter {
 
         mainView.showDialog();
         mainView.showProgress(0);
-        *//*RequestBody requestFile =
+      *//* RequestBody requestFile =
                 RequestBody.create(MediaType.parse("application/otcet-stream"), file);*//*
 
         MultipartBody.Part body =
@@ -123,7 +122,6 @@ public class TestPresenter extends BasePresenter {
 
     private int nowUploadIndex = 1;
     private int countSum = 0;
-
     public void uploadFiles(List<File> files) {
         nowUploadIndex = 1;
         countSum = files.size();
@@ -143,34 +141,22 @@ public class TestPresenter extends BasePresenter {
                         return getUploadBeanObservable(file);
                     }
                 })
-                *//* .onErrorReturnItem(new UploadBean())*//*
-                //处理文件上传出错
-                .onErrorResumeNext(new ObservableSource<UploadBean>() {
-                    @Override
-                    public void subscribe(Observer<? super UploadBean> observer) {
-                        observer.onNext(new UploadBean());
-                    }
-                })
                 .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
                 .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
                 .subscribe(new Observer<UploadBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
-
                     @Override
                     public void onNext(UploadBean uploadBean) {
-                        //
+                        //更新总进度
                         if (uploadBean != null) {
                             mainView.showToast(uploadBean.getMsg());
                         }
                         mainView.setDialogMsg(nowUploadIndex + 1 + "/" + countSum);
                         mainView.showProgress(0);
                         nowUploadIndex++;
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         mainView.showToast(e.toString());
@@ -178,14 +164,13 @@ public class TestPresenter extends BasePresenter {
                         mainView.showProgress(0);
                         nowUploadIndex++;
                     }
-
                     @Override
                     public void onComplete() {
                         mainView.dismissDialog();
                     }
                 });
     }
-
+    //上传单个文件
     private Observable<UploadBean> getUploadBeanObservable(File file) {
 
         MultipartBody.Part body =
@@ -193,6 +178,7 @@ public class TestPresenter extends BasePresenter {
                         new UploadFileRequestBody(file, new UploadFileRequestBody.UploadFileCall() {
                             @Override
                             public void onProgress(int progress) {
+                                //更新单个进度
                                 mainView.showProgress(progress);
                             }
                         }));
