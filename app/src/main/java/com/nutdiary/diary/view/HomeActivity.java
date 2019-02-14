@@ -2,6 +2,7 @@ package com.nutdiary.diary.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -26,6 +27,7 @@ import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.presenter.HomePresenter;
 import com.nutdiary.diary.utils.MyPermissionUtils;
+import com.nutdiary.diary.utils.UploadUtils;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -35,6 +37,7 @@ import com.scwang.smartrefresh.layout.header.FalsifyHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +125,19 @@ public class HomeActivity extends BaseActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
+
+              String path3 = Environment.getExternalStorageDirectory().getPath()+"/test3.png";
+              String errPath = Environment.getExternalStorageDirectory().getPath()+"/test4.png";
+                UploadUtils uploadUtils=new UploadUtils();
+                List<File> fileList=new ArrayList<>();
+                fileList.add(new File(path3));
+                fileList.add(new File(path3));
+                fileList.add(new File(errPath));
+                fileList.add(new File(path3));
+                fileList.add(new File(path3));
+                fileList.add(new File(path3));
+                uploadUtils.uploadFiles(fileList);
+               // startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
             }
         });
     }

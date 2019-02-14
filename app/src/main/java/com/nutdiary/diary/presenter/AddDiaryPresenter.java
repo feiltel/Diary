@@ -10,6 +10,7 @@ import com.nutdiary.diary.contract.AddDiaryContract;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
+import java.io.File;
 import java.util.Random;
 
 import io.reactivex.Observable;
@@ -34,10 +35,11 @@ public class AddDiaryPresenter extends BasePresenter {
 
 
     public void saveItemData(MainListItem mainListItem) {
+
         mainModel.saveItemData(mainListItem)
                 .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
                 .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
-                .compose(getProvider().<MainListBean>bindUntilEvent(ActivityEvent.DESTROY))// onDestroy取消订阅
+                .compose(getProvider().bindUntilEvent(ActivityEvent.DESTROY))// onDestroy取消订阅
                 .subscribe(new DefaultObserver<MainListBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull MainListBean mainListBean) {
@@ -55,19 +57,7 @@ public class AddDiaryPresenter extends BasePresenter {
                     }
                 });
 
-        Random random = new Random();
-        Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
-            @Override
-            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
 
-                emitter.onNext(random.nextInt());
-                emitter.onNext(random.nextInt());
-                emitter.onNext(random.nextInt());
-                emitter.onError(new Exception());
-                emitter.onNext(random.nextInt());
-                emitter.onNext(random.nextInt());
-            }
-        });
 
     }
 

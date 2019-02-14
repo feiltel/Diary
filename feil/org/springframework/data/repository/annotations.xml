@@ -1,0 +1,5 @@
+<root>
+    <item name='org.springframework.data.repository.CrudRepository S save(S)'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

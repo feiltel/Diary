@@ -44,4 +44,8 @@ public interface RetrofitService {
     @Multipart
     @POST("uploads")
     Observable<UploadBean> uploadFile(@Part MultipartBody.Part file);
+
+    @Multipart
+    @POST("uploads")
+    Observable<String> uploadFiles(@Part MultipartBody.Part file);
 }
