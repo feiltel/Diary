@@ -8,14 +8,14 @@ import java.util.List;
  * Author:Administrator
  * Time:2019/1/31 0031
  */
-public class MainListBean extends ResultBean {
-    private List<DiaryBean> data;
+public class SaveResultBean extends ResultBean {
+    private DiaryBean data;
 
-    public List<DiaryBean> getList() {
+    public DiaryBean getData() {
         return data;
     }
 
-    public void setList(List<DiaryBean> list) {
-        this.data = list;
+    public void setData(DiaryBean data) {
+        this.data = data;
     }
 }

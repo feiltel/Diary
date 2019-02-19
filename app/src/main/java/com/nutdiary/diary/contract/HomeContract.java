@@ -2,13 +2,11 @@ package com.nutdiary.diary.contract;
 
 import com.nutdiary.diary.base.BaseView;
 import com.nutdiary.diary.bean.MainListBean;
-import com.nutdiary.diary.bean.MainListItem;
-import com.nutdiary.diary.bean.UploadBean;
+import com.nutdiary.diary.bean.DiaryBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 
 /**
  * Author:Administrator
@@ -16,15 +14,15 @@ import okhttp3.MultipartBody;
  */
 public class HomeContract {
     public interface HomeView extends BaseView{
-        void addList(List<MainListItem> mainListItems);
+        void addList(List<DiaryBean> mainListItems);
         void addFail();
-        void firstList(List<MainListItem> mainListItems);
+        void firstList(List<DiaryBean> mainListItems);
         void firstFail();
 
     }
 
     public interface HomeModel {
-        Observable<MainListBean> getMainListData(String token);
+        Observable<MainListBean> getMainListData(Integer page,Integer limit);
     }
 
 }

@@ -87,7 +87,12 @@ public class UploadUtils {
                                 Log.d("Progress", stringBuffer.toString());
                             }
                         }));
-        return RetrofitHelper.getInstance().getRetrofitService().uploadFiles(body).onErrorReturn(new Function<Throwable, String>() {
+        return RetrofitHelper.getInstance().getRetrofitService().uploadFiles(body).flatMap(new Function<String, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(String s) throws Exception {
+                return RetrofitHelper.getInstance().getRetrofitService().getMainListDatas("123");
+            }
+        }).onErrorReturn(new Function<Throwable, String>() {
             @Override
             public String apply(Throwable throwable) throws Exception {
                 return "-1";

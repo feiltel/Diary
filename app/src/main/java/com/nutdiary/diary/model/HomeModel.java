@@ -19,8 +19,8 @@ public class HomeModel implements HomeContract.HomeModel {
     }
 
     @Override
-    public Observable<MainListBean> getMainListData(String token) {
-        return retrofitService.getMainListData(token);
+    public Observable<MainListBean> getMainListData(Integer page,Integer limit) {
+        return retrofitService.getMainListData(page,limit);
     }
 
 }

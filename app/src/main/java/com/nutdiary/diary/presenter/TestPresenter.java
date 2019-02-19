@@ -1,29 +1,5 @@
 package com.nutdiary.diary.presenter;
 
-import android.support.annotation.NonNull;
-
-import com.nutdiary.diary.base.BasePresenter;
-import com.nutdiary.diary.bean.MainListBean;
-import com.nutdiary.diary.bean.MainListItem;
-import com.nutdiary.diary.bean.UploadBean;
-import com.nutdiary.diary.contract.AddDiaryContract;
-import com.nutdiary.diary.network.UploadFileRequestBody;
-import com.nutdiary.diary.network.UploadObserver;
-import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.android.ActivityEvent;
-
-import java.io.File;
-import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.observers.DefaultObserver;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.MultipartBody;
 /*
 public class TestPresenter extends BasePresenter {
     private AddDiaryContract.AddDiaryView mainView;

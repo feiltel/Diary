@@ -2,7 +2,6 @@ package com.nutdiary.diary.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -22,22 +20,17 @@ import com.nutdiary.diary.R;
 import com.nutdiary.diary.base.BaseActivity;
 import com.nutdiary.diary.base.BaseRecyclerView.CommonAdapter;
 import com.nutdiary.diary.base.BaseRecyclerView.baseIn.ViewHolder;
-import com.nutdiary.diary.bean.MainListItem;
+import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.presenter.HomePresenter;
 import com.nutdiary.diary.utils.MyPermissionUtils;
-import com.nutdiary.diary.utils.UploadUtils;
 import com.scwang.smartrefresh.header.DeliveryHeader;
-import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.header.FalsifyHeader;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +56,9 @@ public class HomeActivity extends BaseActivity
     SmartRefreshLayout refreshLayout;
 
     private HomePresenter homePresenter;
-    private CommonAdapter<MainListItem> commonAdapter;
-    private List<MainListItem> mainListItemList = new ArrayList<>();
+    private CommonAdapter<DiaryBean> commonAdapter;
+    private List<DiaryBean> mainListItemList = new ArrayList<>();
+    private int nowPageNumber=1;
 
 
     @Override
@@ -78,8 +72,9 @@ public class HomeActivity extends BaseActivity
 
         initView();
         initEvent();
-        homePresenter.getListData("123");
+        homePresenter.getListData(1);
     }
+
 
     private void initToolBar() {
         toolbar.setTitle("");
@@ -89,30 +84,27 @@ public class HomeActivity extends BaseActivity
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        commonAdapter = new CommonAdapter<MainListItem>(this, R.layout.main_list_item, mainListItemList) {
+        commonAdapter = new CommonAdapter<DiaryBean>(this, R.layout.main_list_item, mainListItemList) {
             @Override
-            protected void convert(ViewHolder holder, MainListItem mainListItem, int position) {
+            protected void convert(ViewHolder holder, DiaryBean mainListItem, int position) {
                 holder.setText(R.id.content_tv, mainListItem.getContent());
-                holder.setText(R.id.date_tv, mainListItem.getDateStr());
-                holder.setText(R.id.weather_tv, mainListItem.getWeather());
+                holder.setText(R.id.date_tv, mainListItem.getLocationName());
+                holder.setText(R.id.weather_tv, mainListItem.getMood());
             }
         };
         recyclerView.setAdapter(commonAdapter);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                homePresenter.getFirstListData("123");
 
-            }
+        refreshLayout.setOnRefreshListener(refreshLayout -> {
+                nowPageNumber=1;
+                homePresenter.getFirstListData(nowPageNumber);
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                homePresenter.getListData("123");
-            }
+        refreshLayout.setOnLoadMoreListener(refreshLayout -> {
+
+            homePresenter.getListData(nowPageNumber);
         });
+
         refreshLayout.setRefreshHeader(new DeliveryHeader(this));
-        refreshLayout.setRefreshFooter(new BallPulseFooter(this), ViewGroup.LayoutParams.MATCH_PARENT,32);
+        refreshLayout.setRefreshFooter(new BallPulseFooter(this));
     }
 
     private void initView() {
@@ -122,24 +114,7 @@ public class HomeActivity extends BaseActivity
     }
 
     private void initEvent() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-              String path3 = Environment.getExternalStorageDirectory().getPath()+"/test3.png";
-              String errPath = Environment.getExternalStorageDirectory().getPath()+"/test4.png";
-                UploadUtils uploadUtils=new UploadUtils();
-                List<File> fileList=new ArrayList<>();
-                fileList.add(new File(path3));
-                fileList.add(new File(path3));
-                fileList.add(new File(errPath));
-                fileList.add(new File(path3));
-                fileList.add(new File(path3));
-                fileList.add(new File(path3));
-                uploadUtils.uploadFiles(fileList);
-               // startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
-            }
-        });
+        fab.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class)));
     }
 
     private void initNavigation() {
@@ -188,18 +163,8 @@ public class HomeActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_user_center) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -224,12 +189,15 @@ public class HomeActivity extends BaseActivity
     }
 
     @Override
-    public void addList(List<MainListItem> mainListItems) {
-
+    public void addList(List<DiaryBean> mainListItems) {
         refreshLayout.finishLoadMore();
-        mainListItemList.addAll(mainListItems);
-        commonAdapter.notifyItemRangeInserted(mainListItemList.size(),mainListItems.size());
 
+
+        if (mainListItems.size()>0){
+            mainListItemList.addAll(mainListItems);
+            commonAdapter.notifyItemRangeInserted(mainListItemList.size(), mainListItems.size());
+            nowPageNumber++;
+        }
     }
 
     @Override
@@ -239,15 +207,18 @@ public class HomeActivity extends BaseActivity
     }
 
     @Override
-    public void firstList(List<MainListItem> mainListItems) {
+    public void firstList(List<DiaryBean> mainListItems) {
+
         refreshLayout.finishRefresh();
         mainListItemList.clear();
         mainListItemList.addAll(mainListItems);
         commonAdapter.notifyDataSetChanged();
+        nowPageNumber++;
     }
 
     @Override
     public void firstFail() {
+
         refreshLayout.finishRefresh();
 
 

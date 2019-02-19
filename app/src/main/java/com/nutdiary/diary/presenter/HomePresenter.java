@@ -33,9 +33,9 @@ public class HomePresenter extends BasePresenter {
         this.homeView=homeView;
         homeModel=new HomeModel();
     }
-    public void getListData(String token) {
+    public void getListData(Integer page) {
 
-        homeModel.getMainListData(token)
+        homeModel.getMainListData(page,10)
                 .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
                 .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
                 .compose(getProvider().bindUntilEvent(ActivityEvent.DESTROY))// onDestroy取消订阅
@@ -57,9 +57,9 @@ public class HomePresenter extends BasePresenter {
                     }
                 });
     }
-    public void getFirstListData(String token) {
+    public void getFirstListData(Integer page) {
 
-        homeModel.getMainListData(token)
+        homeModel.getMainListData(page,10)
                 .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
                 .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
                 .compose(getProvider().<MainListBean>bindUntilEvent(ActivityEvent.DESTROY))// onDestroy取消订阅

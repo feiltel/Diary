@@ -1,7 +1,9 @@
 package com.nutdiary.diary.model;
 
+import com.nutdiary.diary.bean.AddressBean;
+import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.bean.MainListBean;
-import com.nutdiary.diary.bean.MainListItem;
+import com.nutdiary.diary.bean.SaveResultBean;
 import com.nutdiary.diary.bean.UploadBean;
 import com.nutdiary.diary.contract.AddDiaryContract;
 import com.nutdiary.diary.network.RetrofitHelper;
@@ -23,8 +25,18 @@ public class AddDiaryModel implements AddDiaryContract.AddDiaryModel {
 
 
     @Override
-    public Observable<MainListBean> saveItemData(MainListItem mainListItem) {
+    public Observable<SaveResultBean> saveItemData(DiaryBean mainListItem) {
         return retrofitService.saveItemData(mainListItem);
+    }
+
+    @Override
+    public Observable<AddressBean> getAddress(double lng, double lat) {
+        String url = "http://api.map.baidu.com/geocoder?output=json&location=" +
+                lng +
+                "," +
+                lat +
+                "&ak=esNPFDwwsXWtsQfw4NMNmur1";
+        return retrofitService.getAddress(url);
     }
 
 
