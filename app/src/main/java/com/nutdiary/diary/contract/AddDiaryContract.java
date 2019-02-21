@@ -14,7 +14,7 @@ import okhttp3.MultipartBody;
  */
 public class AddDiaryContract {
     public interface AddDiaryView extends BaseView {
-
+        void backActivity();
     }
 
     public interface AddDiaryModel {

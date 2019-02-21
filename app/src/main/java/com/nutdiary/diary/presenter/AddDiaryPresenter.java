@@ -43,6 +43,9 @@ public class AddDiaryPresenter extends BasePresenter {
                 .subscribe(new DefaultObserver<MainListBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull MainListBean mainListBean) {
+                        if (mainListBean.getCode()==0){
+                            mainView.backActivity();
+                        }
                         mainView.showToast(mainListBean.getMsg());
                     }
 

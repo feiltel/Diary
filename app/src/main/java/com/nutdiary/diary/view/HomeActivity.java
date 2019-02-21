@@ -27,6 +27,8 @@ import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.presenter.HomePresenter;
 import com.nutdiary.diary.utils.MyPermissionUtils;
+import com.nutdiary.diary.utils.UploadFileInfo;
+import com.nutdiary.diary.utils.UploadJsonAndFiles;
 import com.nutdiary.diary.utils.UploadUtils;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.header.PhoenixHeader;
@@ -112,7 +114,7 @@ public class HomeActivity extends BaseActivity
             }
         });
         refreshLayout.setRefreshHeader(new DeliveryHeader(this));
-        refreshLayout.setRefreshFooter(new BallPulseFooter(this), ViewGroup.LayoutParams.MATCH_PARENT,32);
+        refreshLayout.setRefreshFooter(new BallPulseFooter(this), ViewGroup.LayoutParams.MATCH_PARENT, 32);
     }
 
     private void initView() {
@@ -126,7 +128,7 @@ public class HomeActivity extends BaseActivity
             @Override
             public void onClick(View view) {
 
-              String path3 = Environment.getExternalStorageDirectory().getPath()+"/test3.png";
+            /*  String path3 = Environment.getExternalStorageDirectory().getPath()+"/test3.png";
               String errPath = Environment.getExternalStorageDirectory().getPath()+"/test4.png";
                 UploadUtils uploadUtils=new UploadUtils();
                 List<File> fileList=new ArrayList<>();
@@ -136,8 +138,22 @@ public class HomeActivity extends BaseActivity
                 fileList.add(new File(path3));
                 fileList.add(new File(path3));
                 fileList.add(new File(path3));
-                uploadUtils.uploadFiles(fileList);
-               // startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
+                uploadUtils.uploadFiles(fileList);*/
+                //startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
+                List<UploadJsonAndFiles> uploadJsonAndFilesList = new ArrayList<>();
+                for (int i = 0; i < 3; i++) {
+                    UploadJsonAndFiles uploadJsonAndFiles = new UploadJsonAndFiles();
+                    uploadJsonAndFiles.setJsonItemStr("1");
+                    uploadJsonAndFiles.setJsonDotStr("2");
+                    List<UploadFileInfo> uploadFileInfoList=new ArrayList<>();
+                    for (int j = 0; j < 5; j++) {
+                        UploadFileInfo uploadFileInfo=new UploadFileInfo();
+                        uploadFileInfoList.add(uploadFileInfo);
+                    }
+                    uploadJsonAndFiles.setUploadFileInfoList(uploadFileInfoList);
+                    uploadJsonAndFilesList.add(uploadJsonAndFiles);
+                }
+                new UploadUtils().uploadJsonAndFiles(uploadJsonAndFilesList);
             }
         });
     }
@@ -228,7 +244,7 @@ public class HomeActivity extends BaseActivity
 
         refreshLayout.finishLoadMore();
         mainListItemList.addAll(mainListItems);
-        commonAdapter.notifyItemRangeInserted(mainListItemList.size(),mainListItems.size());
+        commonAdapter.notifyItemRangeInserted(mainListItemList.size(), mainListItems.size());
 
     }
 

@@ -11,6 +11,7 @@ import com.nutdiary.diary.R;
 import com.nutdiary.diary.base.BaseActivity;
 import com.nutdiary.diary.bean.MainListItem;
 import com.nutdiary.diary.bean.UploadBean;
+import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.AddDiaryContract;
 import com.nutdiary.diary.network.UploadFileRequestBody;
 import com.nutdiary.diary.presenter.AddDiaryPresenter;
@@ -81,7 +82,7 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
 
     @Override
     public void showToast(String msg) {
-
+        MyToast.showToast(msg);
     }
 
     @Override
@@ -96,7 +97,11 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
 
     @OnClick(R.id.right_tv)
     public void onViewClicked() {
-
         addDiaryPresenter.saveItemData(new MainListItem("2019.2.12", contentEt.getText().toString(), 1, "多云"));
+    }
+
+    @Override
+    public void backActivity() {
+        finish();
     }
 }
