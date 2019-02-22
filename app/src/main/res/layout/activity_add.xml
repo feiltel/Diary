@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.AddDiaryActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/all_top_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="true">
+
         <EditText
-            android:focusable="true"
             android:id="@+id/content_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
             android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="start" />
     </ScrollView>
 
-
-    <LinearLayout
+    <com.hsalf.smilerating.SmileRating
+        android:layout_marginLeft="16dp"
+        android:id="@+id/smile_rating"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" />
+    <FrameLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center_vertical"
+            android:id="@+id/location_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="start"
+            android:drawableLeft="@drawable/ic_place_black_24dp"
+            android:text="定位中..." />
 
         <TextView
-            android:id="@+id/location_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_place_black_24dp"
-            android:text="获取位置信息"
-            android:textSize="16sp" />
-
-        <ImageView
+            android:gravity="center_vertical|end"
+            android:id="@+id/phone_name_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_tag_faces_black_24dp" />
-    </LinearLayout>
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:drawableLeft="@drawable/ic_phone_android_black_24dp"
+            android:text="redmi note7" />
+    </FrameLayout>
+
+
 </LinearLayout>

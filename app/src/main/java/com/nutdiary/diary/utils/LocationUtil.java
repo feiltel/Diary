@@ -10,7 +10,8 @@ import android.util.Log;
 
 public class LocationUtil {
     @SuppressLint("MissingPermission")
-    public static void getLocation(Context context) {
+    public static String getLocation(Context context) {
+
         double latitude = 0.0;
         double longitude = 0.0;
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -21,7 +22,7 @@ public class LocationUtil {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
             } else {//当GPS信号弱没获取到位置的时候又从网络获取
-                 getLngAndLatWithNetwork(context);
+               return getLngAndLatWithNetwork(context);
             }
         } else {    //从网络获取经纬度
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
@@ -32,6 +33,8 @@ public class LocationUtil {
             }
         }
         Log.e("location", longitude + "," + latitude);
+        return longitude + "," + latitude;
+
     }
 
     //从网络获取经纬度
