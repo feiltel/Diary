@@ -16,8 +16,9 @@ import okhttp3.MultipartBody;
  */
 public class AddDiaryContract {
     public interface AddDiaryView extends BaseView {
-        void setAddress(String address);
+        void setAddress(String address,double lat,double lng);
         void finishSave();
+
     }
 
     public interface AddDiaryModel {

@@ -1,19 +1,12 @@
 package com.nutdiary.diary.presenter;
 
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.nutdiary.diary.base.BasePresenter;
 import com.nutdiary.diary.bean.AddressBean;
 import com.nutdiary.diary.bean.DiaryBean;
-import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.SaveResultBean;
-import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.AddDiaryContract;
-import com.nutdiary.diary.utils.LocationUtil;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
@@ -64,10 +57,9 @@ public class AddDiaryPresenter extends BasePresenter {
 
     public void getAddress(String locationStr) {
         String[] strings = locationStr.split(",");
-        MyToast.showToast(locationStr);
         double lng = Double.parseDouble(strings[0]);
-        double lat =  Double.parseDouble(strings[1]);
-        if (lng==0){
+        double lat = Double.parseDouble(strings[1]);
+        if (lng == 0) {
             return;
         }
         mainModel.getAddress(lat, lng)
@@ -77,7 +69,7 @@ public class AddDiaryPresenter extends BasePresenter {
                 .subscribe(new DefaultObserver<AddressBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull AddressBean addressBean) {
-                        addDiaryView.setAddress(addressBean.getResult().getAddressComponent().getCity()+addressBean.getResult().getAddressComponent().getDistrict());
+                        addDiaryView.setAddress(addressBean.getResult().getAddressComponent().getCity() + addressBean.getResult().getAddressComponent().getDistrict(), lat, lng);
                     }
 
                     @Override

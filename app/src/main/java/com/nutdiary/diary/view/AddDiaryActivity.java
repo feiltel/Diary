@@ -1,18 +1,11 @@
 package com.nutdiary.diary.view;
 
 import android.Manifest;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,6 +17,7 @@ import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.AddDiaryContract;
 import com.nutdiary.diary.presenter.AddDiaryPresenter;
+import com.nutdiary.diary.utils.InputUtil;
 import com.nutdiary.diary.utils.LocationUtil;
 import com.nutdiary.diary.utils.MyPermissionUtils;
 import com.nutdiary.diary.utils.PhoneUtil;
@@ -51,7 +45,9 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
     SmileRating smileRating;
     @BindView(R.id.phone_name_tv)
     TextView phoneNameTv;
+
     private AddDiaryPresenter addDiaryPresenter;
+    private double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +56,8 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
         addDiaryPresenter = new AddDiaryPresenter(this, this);
         ButterKnife.bind(this);
         initView();
-        InputMethodManager imm = (InputMethodManager) contentEt.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            contentEt.requestFocus();
-            imm.showSoftInput(contentEt, 0);
-        }
-        if (MyPermissionUtils.checkAndRequest(this, Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION_REQUEST_CODE)) {
-            addDiaryPresenter.getAddress(LocationUtil.getLocation(this));
-        }
+        getAddressInfo();
+
     }
 
 
@@ -75,9 +65,9 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
         initToolBar();
         rightTv.setVisibility(View.VISIBLE);
         rightTv.setText("保存");
-        // LocationUtil.getLocation(this);
         smileRating.setSelectedSmile(BaseRating.OKAY);
         phoneNameTv.setText(PhoneUtil.getDeviceName());
+        InputUtil.showKeyBoard(contentEt);
 
     }
 
@@ -115,33 +105,22 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
 
     }
 
-    @OnClick(R.id.right_tv)
-    public void onViewClicked() {
-
-    }
 
     @OnClick({R.id.right_tv, R.id.location_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.right_tv:
-                String contentStr = TextViewUtil.getString(contentEt);
-                int userId = 21;
-                String locationName = TextViewUtil.getString(locationTv);
-                double lat = 108.953708; //纬度
-                double lng = 34.323827;//经度
-                String mood = smileRating.getSmileName(smileRating.getSelectedSmile());
-                DiaryBean diaryBean = new DiaryBean(contentStr, userId, locationName, lat, lng, mood);
+                //保存按钮
+                String contentStr = TextViewUtil.getString(contentEt); //日记内容
+                String locationName = TextViewUtil.getString(locationTv); //地点名称
+                String mood = smileRating.getSmileName(smileRating.getSelectedSmile()); //心情
+                //保存
+                DiaryBean diaryBean = new DiaryBean(contentStr, 21, locationName, lat, lng, mood);
                 addDiaryPresenter.saveItemData(diaryBean);
                 break;
             case R.id.location_tv:
-                if (MyPermissionUtils.checkAndRequest(this, Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION_REQUEST_CODE)) {
-                    if (!isOPen(this)) {
-                        openGPS(this);
-                    }
-                    addDiaryPresenter.getAddress(LocationUtil.getLocation(this));
-                }
-
-
+                //获取位置信息
+                getAddressInfo();
                 break;
         }
     }
@@ -149,47 +128,25 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //权限返回结果
         int perCode = MyPermissionUtils.getRequestPermissionsResult(this, requestCode, permissions, grantResults, ACCESS_COARSE_LOCATION_REQUEST_CODE, Manifest.permission.ACCESS_FINE_LOCATION);
-        Log.d("Permissions", perCode + ">>");
-        if (perCode==1){
+        if (perCode == 1) {
+            getAddressInfo();
+        }
+    }
+
+    private void getAddressInfo() {
+        if (MyPermissionUtils.checkAndRequest(this, Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION_REQUEST_CODE)) {
             addDiaryPresenter.getAddress(LocationUtil.getLocation(this));
         }
     }
 
-    /**
-     * 强制帮用户打开GPS
-     *
-     * @param context
-     */
-    public static final void openGPS(Context context) {
-        Intent GPSIntent = new Intent();
-        GPSIntent.setClassName("com.android.settings",
-                "com.android.settings.widget.SettingsAppWidgetProvider");
-        GPSIntent.addCategory("android.intent.category.ALTERNATIVE");
-        GPSIntent.setData(Uri.parse("custom:3"));
-        try {
-            PendingIntent.getBroadcast(context, 0, GPSIntent, 0).send();
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static final boolean isOPen(final Context context) {
-        LocationManager locationManager
-                = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        // 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
-        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        // 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
-        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if (gps || network) {
-            return true;
-        }
-        return gps;
-    }
 
     @Override
-    public void setAddress(String address) {
+    public void setAddress(String address, double lat, double lng) {
         locationTv.setText(address);
+        this.lat = lat;
+        this.lng = lng;
     }
 
     @Override
