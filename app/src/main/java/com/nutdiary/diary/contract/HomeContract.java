@@ -1,6 +1,7 @@
 package com.nutdiary.diary.contract;
 
 import com.nutdiary.diary.base.BaseView;
+import com.nutdiary.diary.base.ResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.DiaryBean;
 
@@ -14,15 +15,16 @@ import io.reactivex.Observable;
  */
 public class HomeContract {
     public interface HomeView extends BaseView{
-        void addList(List<DiaryBean> mainListItems);
-        void addFail();
-        void firstList(List<DiaryBean> mainListItems);
-        void firstFail();
-
+        void finishLoadMore();
+        void finishRefresh();
+        void clearDataAndRefresh();
+        void addDataAndRefresh(List<DiaryBean> mainListItems);
+        void removeItem(int pos);
     }
 
     public interface HomeModel {
         Observable<MainListBean> getMainListData(Integer page,Integer limit);
+        Observable<ResultBean> delete(Integer id);
     }
 
 }

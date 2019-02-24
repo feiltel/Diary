@@ -2,10 +2,10 @@ package com.nutdiary.diary.model;
 
 import com.nutdiary.diary.bean.AddressBean;
 import com.nutdiary.diary.bean.DiaryBean;
-import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.SaveResultBean;
 import com.nutdiary.diary.bean.UploadBean;
 import com.nutdiary.diary.contract.AddDiaryContract;
+import com.nutdiary.diary.network.Constant;
 import com.nutdiary.diary.network.RetrofitHelper;
 import com.nutdiary.diary.network.RetrofitService;
 
@@ -31,18 +31,12 @@ public class AddDiaryModel implements AddDiaryContract.AddDiaryModel {
 
     @Override
     public Observable<AddressBean> getAddress(double lng, double lat) {
-        String url = "http://api.map.baidu.com/geocoder?output=json&location=" +
-                lng +
-                "," +
-                lat +
-                "&ak=esNPFDwwsXWtsQfw4NMNmur1";
-        return retrofitService.getAddress(url);
+        return retrofitService.getAddress(Constant.getAddressUrl(lng, lat));
     }
 
 
     @Override
     public Observable<UploadBean> uploadFile(MultipartBody.Part file) {
-
         return retrofitService.uploadFile(file);
     }
 }

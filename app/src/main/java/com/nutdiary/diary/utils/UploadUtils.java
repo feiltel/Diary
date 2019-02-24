@@ -9,13 +9,10 @@ import java.io.File;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
@@ -24,7 +21,8 @@ public class UploadUtils {
     private int nowUploadIndex = 1;
     private int countSum = 0;
 
-    private int courrentIndex=1;
+    private int courrentIndex = 1;
+
     public void uploadJsonAndFiles(List<UploadJsonAndFiles> uploadJsonAndFilesList) {
         Observable.just(uploadJsonAndFilesList)
                 .flatMap(new Function<List<UploadJsonAndFiles>, ObservableSource<UploadJsonAndFiles>>() {
@@ -47,7 +45,7 @@ public class UploadUtils {
 
                     @Override
                     public void onNext(Integer integer) {
-                        Log.d("allprogress",courrentIndex+"完成");
+                        Log.d("allprogress", courrentIndex + "完成");
                         courrentIndex++;
                     }
 
@@ -62,60 +60,61 @@ public class UploadUtils {
                     }
                 });
     }
-    private int fileIndex=1;
+
+    private int fileIndex = 1;
+
     private Observable<Integer> createJsonAndFileObservable(UploadJsonAndFiles uploadJsonAndFiles) {
-        fileIndex=1;
+        fileIndex = 1;
         return Observable.just(uploadJsonAndFiles).flatMap(new Function<UploadJsonAndFiles, ObservableSource<Integer>>() {
             @Override
             public ObservableSource<Integer> apply(UploadJsonAndFiles uploadJsonAndFiles) throws Exception {
-                Log.d("progress","上传第一个JSON");
+                Log.d("progress", "上传第一个JSON");
                 //第一个json
                 return Observable.just(uploadJsonAndFiles.getJsonItemStr()).flatMap(new Function<String, ObservableSource<Integer>>() {
                     @Override
                     public ObservableSource<Integer> apply(String s) throws Exception {
-                            //第二个
-                        Log.d("progress","上传第2个JSON");
-                            return Observable.just(uploadJsonAndFiles.getJsonDotStr()).flatMap(new Function<String, ObservableSource<Integer>>() {
-                                @Override
-                                public ObservableSource<Integer> apply(String integer) throws Exception {
-                                        return Observable.just(uploadJsonAndFiles.getUploadFileInfoList()).flatMap(new Function<List<UploadFileInfo>, ObservableSource<UploadFileInfo>>() {
-                                            @Override
-                                            public ObservableSource<UploadFileInfo> apply(List<UploadFileInfo> uploadFileInfos) throws Exception {
-                                                return Observable.fromIterable(uploadFileInfos);
-                                            }
-                                        }).flatMap(new Function<UploadFileInfo, ObservableSource<Integer>>() {
+                        //第二个
+                        Log.d("progress", "上传第2个JSON");
+                        return Observable.just(uploadJsonAndFiles.getJsonDotStr()).flatMap(new Function<String, ObservableSource<Integer>>() {
+                            @Override
+                            public ObservableSource<Integer> apply(String integer) throws Exception {
+                                return Observable.just(uploadJsonAndFiles.getUploadFileInfoList()).flatMap(new Function<List<UploadFileInfo>, ObservableSource<UploadFileInfo>>() {
+                                    @Override
+                                    public ObservableSource<UploadFileInfo> apply(List<UploadFileInfo> uploadFileInfos) throws Exception {
+                                        return Observable.fromIterable(uploadFileInfos);
+                                    }
+                                }).flatMap(new Function<UploadFileInfo, ObservableSource<Integer>>() {
+                                    @Override
+                                    public ObservableSource<Integer> apply(UploadFileInfo uploadFileInfo) throws Exception {
+                                        Log.d("filprogress", fileIndex + "完成");
+                                        fileIndex++;
+                                        return Observable.just(uploadFileInfo).flatMap(new Function<UploadFileInfo, ObservableSource<Integer>>() {
                                             @Override
                                             public ObservableSource<Integer> apply(UploadFileInfo uploadFileInfo) throws Exception {
-                                                Log.d("filprogress",fileIndex+"完成");
-                                                fileIndex++;
-                                                return Observable.just(uploadFileInfo).flatMap(new Function<UploadFileInfo, ObservableSource<Integer>>() {
-                                                    @Override
-                                                    public ObservableSource<Integer> apply(UploadFileInfo uploadFileInfo) throws Exception {
-                                                        return null;
-                                                    }
-                                                }).onErrorReturn(new Function<Throwable, Integer>() {
-                                                    @Override
-                                                    public Integer apply(Throwable throwable) throws Exception {
-                                                        return 2;
-                                                    }
-                                                });
+                                                return null;
                                             }
                                         }).onErrorReturn(new Function<Throwable, Integer>() {
                                             @Override
                                             public Integer apply(Throwable throwable) throws Exception {
-                                                return 1;
+                                                return 2;
                                             }
                                         });
+                                    }
+                                }).onErrorReturn(new Function<Throwable, Integer>() {
+                                    @Override
+                                    public Integer apply(Throwable throwable) throws Exception {
+                                        return 1;
+                                    }
+                                });
 
-                                }
-                            });
+                            }
+                        });
 
                     }
                 });
             }
         });
     }
-
 
 
     public void uploadFiles(List<File> files) {
@@ -187,7 +186,7 @@ public class UploadUtils {
         return RetrofitHelper.getInstance().getRetrofitService().uploadFiles(body).flatMap(new Function<String, ObservableSource<String>>() {
             @Override
             public ObservableSource<String> apply(String s) throws Exception {
-                return RetrofitHelper.getInstance().getRetrofitService().getMainListDatas("123");
+                return null;
             }
         }).onErrorReturn(new Function<Throwable, String>() {
             @Override

@@ -2,7 +2,6 @@ package com.nutdiary.diary.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +12,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
 import android.widget.TextView;
 
 import com.nutdiary.diary.R;
 import com.nutdiary.diary.base.BaseActivity;
 import com.nutdiary.diary.base.BaseRecyclerView.CommonAdapter;
+import com.nutdiary.diary.base.BaseRecyclerView.MultiItemTypeAdapter;
 import com.nutdiary.diary.base.BaseRecyclerView.baseIn.ViewHolder;
 import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.component.MyToast;
@@ -27,15 +27,14 @@ import com.nutdiary.diary.presenter.HomePresenter;
 import com.nutdiary.diary.utils.MyPermissionUtils;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.refactor.lib.colordialog.PromptDialog;
 
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeContract.HomeView {
@@ -58,7 +57,7 @@ public class HomeActivity extends BaseActivity
     private HomePresenter homePresenter;
     private CommonAdapter<DiaryBean> commonAdapter;
     private List<DiaryBean> mainListItemList = new ArrayList<>();
-    private int nowPageNumber=1;
+    private int nowPageNumber = 1;
 
 
     @Override
@@ -92,11 +91,34 @@ public class HomeActivity extends BaseActivity
                 holder.setText(R.id.weather_tv, mainListItem.getMood());
             }
         };
+        commonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                final DiaryBean diaryBean = mainListItemList.get(position);
+                new PromptDialog(HomeActivity.this)
+                        .setDialogType(PromptDialog.DIALOG_TYPE_WARNING)
+                        .setAnimationEnable(true)
+                        .setTitleText("删除")
+                        .setContentText("确定要删除这条记录吗？")
+                        .setPositiveListener("确定", new PromptDialog.OnPositiveListener() {
+                            @Override
+                            public void onClick(PromptDialog dialog) {
+                                dialog.dismiss();
+                                homePresenter.deleteItem(diaryBean.getId(), position);
+                            }
+                        }).show();
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
         recyclerView.setAdapter(commonAdapter);
 
         refreshLayout.setOnRefreshListener(refreshLayout -> {
-                nowPageNumber=1;
-                homePresenter.getFirstListData(nowPageNumber);
+            nowPageNumber = 1;
+            homePresenter.getFirstListData(nowPageNumber);
         });
         refreshLayout.setOnLoadMoreListener(refreshLayout -> {
 
@@ -183,44 +205,39 @@ public class HomeActivity extends BaseActivity
 
     @Override
     public void hideLoadDialog() {
-
-
         myLoadDialog.hide();
     }
 
     @Override
-    public void addList(List<DiaryBean> mainListItems) {
+    public void finishLoadMore() {
         refreshLayout.finishLoadMore();
+    }
 
+    @Override
+    public void finishRefresh() {
+        refreshLayout.finishRefresh();
+    }
 
-        if (mainListItems.size()>0){
+    @Override
+    public void clearDataAndRefresh() {
+        nowPageNumber = 1;
+        mainListItemList.clear();
+        commonAdapter.notifyItemRangeChanged(0, mainListItemList.size());
+    }
+
+    @Override
+    public void addDataAndRefresh(List<DiaryBean> mainListItems) {
+        if (mainListItems.size() > 0) {
             mainListItemList.addAll(mainListItems);
             commonAdapter.notifyItemRangeInserted(mainListItemList.size(), mainListItems.size());
             nowPageNumber++;
         }
     }
 
-    @Override
-    public void addFail() {
-        refreshLayout.finishLoadMore();
-
-    }
 
     @Override
-    public void firstList(List<DiaryBean> mainListItems) {
-
-        refreshLayout.finishRefresh();
-        mainListItemList.clear();
-        mainListItemList.addAll(mainListItems);
-        commonAdapter.notifyDataSetChanged();
-        nowPageNumber++;
-    }
-
-    @Override
-    public void firstFail() {
-
-        refreshLayout.finishRefresh();
-
-
+    public void removeItem(int pos) {
+        mainListItemList.remove(pos);
+        commonAdapter.notifyItemRemoved(pos);
     }
 }

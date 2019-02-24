@@ -16,11 +16,17 @@ public class Constant {
      * 接口请求地址
      */
     public static class UrlOrigin {
-        /**
-         * 测试GET请求
-         */
         public static final String get_main_list_data = "getListData";
+        public static final String delete_item = "delete";
         public static final String save_item_data = "saveItemData";
         public static final String upload_pic = "upload_pic";
+    }
+
+    public static String getAddressUrl(double lng, double lat) {
+        return "http://api.map.baidu.com/geocoder?output=json&location=" +
+                lng +
+                "," +
+                lat +
+                "&ak=esNPFDwwsXWtsQfw4NMNmur1";
     }
 }

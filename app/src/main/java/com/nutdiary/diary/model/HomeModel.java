@@ -1,5 +1,6 @@
 package com.nutdiary.diary.model;
 
+import com.nutdiary.diary.base.ResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.network.RetrofitHelper;
@@ -21,6 +22,11 @@ public class HomeModel implements HomeContract.HomeModel {
     @Override
     public Observable<MainListBean> getMainListData(Integer page,Integer limit) {
         return retrofitService.getMainListData(page,limit);
+    }
+
+    @Override
+    public Observable<ResultBean> delete(Integer id) {
+        return retrofitService.delete(id);
     }
 
 }
