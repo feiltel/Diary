@@ -136,7 +136,7 @@ public class HomeActivity extends BaseActivity
     }
 
     private void initEvent() {
-        fab.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class)));
+        fab.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, TestActivity.class)));
     }
 
     private void initNavigation() {
