@@ -62,7 +62,8 @@ public interface RetrofitService {
     Observable<UploadBean> uploadFile(@Part MultipartBody.Part file);
 
 
-
+    @POST(Constant.UrlOrigin.user_login)
+    Observable<ResultBean> userLogin(@Query("phone") String phone,@Query("pass") String pass);
     /**
      * 测试用
      * @param file 上传的文件

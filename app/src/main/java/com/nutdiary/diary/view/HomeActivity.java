@@ -136,7 +136,7 @@ public class HomeActivity extends BaseActivity
     }
 
     private void initEvent() {
-        fab.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, TestActivity.class)));
+        fab.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
     }
 
     private void initNavigation() {

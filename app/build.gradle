@@ -57,10 +57,11 @@ dependencies {
 
     implementation 'com.github.sujithkanna:smileyrating:1.6.8'
     implementation 'com.github.andyxialm:ColorDialog:1.0.0'
+    //
 
     implementation 'cn.bingoogolapple:bga-swipeitemlayout:1.0.4@aar'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//
 }
 repositories {
     mavenCentral()

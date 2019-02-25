@@ -20,6 +20,8 @@ public class Constant {
         public static final String delete_item = "delete";
         public static final String save_item_data = "saveItemData";
         public static final String upload_pic = "upload_pic";
+        public static final String user_login = "user_login";
+
     }
 
     public static String getAddressUrl(double lng, double lat) {

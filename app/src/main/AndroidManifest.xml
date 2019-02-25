@@ -37,7 +37,7 @@
         <activity
             android:name=".view.AddDiaryActivity"
             android:label="@string/title_activity_add" />
-        <activity android:name=".view.TestActivity"></activity>
+        <activity android:name=".view.LoginActivity"></activity>
     </application>
 
 </manifest>
