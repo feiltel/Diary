@@ -3,6 +3,7 @@ package com.nutdiary.diary.network;
 import com.nutdiary.diary.base.ResultBean;
 import com.nutdiary.diary.bean.AddressBean;
 import com.nutdiary.diary.bean.DiaryBean;
+import com.nutdiary.diary.bean.LoginResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.SaveResultBean;
 import com.nutdiary.diary.bean.UploadBean;
@@ -63,7 +64,7 @@ public interface RetrofitService {
 
 
     @POST(Constant.UrlOrigin.user_login)
-    Observable<ResultBean> userLogin(@Query("phone") String phone,@Query("pass") String pass);
+    Observable<LoginResultBean> userLogin(@Query("phone") String phone, @Query("pass") String pass);
     /**
      * 测试用
      * @param file 上传的文件

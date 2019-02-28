@@ -27,7 +27,6 @@ public class AddDiaryContract {
         Observable<SaveResultBean> saveItemData(DiaryBean mainListItem);
         Observable<AddressBean> getAddress(double lng, double lat);
 
-
         Observable<UploadBean> uploadFile(MultipartBody.Part part);
     }
 

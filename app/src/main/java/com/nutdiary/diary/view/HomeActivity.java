@@ -2,6 +2,7 @@ package com.nutdiary.diary.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import com.nutdiary.diary.base.BaseRecyclerView.baseIn.ViewHolder;
 import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.HomeContract;
+import com.nutdiary.diary.localData.UserData;
 import com.nutdiary.diary.presenter.HomePresenter;
 import com.nutdiary.diary.utils.MyPermissionUtils;
 import com.scwang.smartrefresh.header.DeliveryHeader;
@@ -136,7 +138,13 @@ public class HomeActivity extends BaseActivity
     }
 
     private void initEvent() {
-        fab.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, LoginActivity.class)));
+        fab.setOnClickListener(view -> {
+            if (UserData.getUserUUID().length() > 5) {
+                startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
+            } else {
+                startActivityForResult(new Intent(HomeActivity.this, AddDiaryActivity.class), 21);
+            }
+        });
     }
 
     private void initNavigation() {
@@ -234,6 +242,13 @@ public class HomeActivity extends BaseActivity
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 21 && resultCode == 0) {
+            startActivity(new Intent(this, AddDiaryActivity.class));
+        }
+    }
 
     @Override
     public void removeItem(int pos) {

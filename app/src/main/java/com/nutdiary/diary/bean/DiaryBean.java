@@ -5,7 +5,7 @@ package com.nutdiary.diary.bean;
  * Time:2019/1/31 0031
  */
 public class DiaryBean {
-    public DiaryBean(Integer id, String content, Integer userId, String locationName, long lat, long lng, String mood) {
+    public DiaryBean(Integer id, String content, String userId, String locationName, long lat, long lng, String mood) {
         this.id = id;
         this.content = content;
         this.userId = userId;
@@ -15,7 +15,7 @@ public class DiaryBean {
         this.mood = mood;
     }
 
-    public DiaryBean(String content, Integer userId, String locationName, double lat, double lng, String mood) {
+    public DiaryBean(String content, String userId, String locationName, double lat, double lng, String mood) {
         this.content = content;
         this.userId = userId;
         this.locationName = locationName;
@@ -40,11 +40,11 @@ public class DiaryBean {
         this.content = content;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -84,7 +84,7 @@ public class DiaryBean {
 
     private String content;
     //用户ID
-    private Integer userId;
+    private String userId;
 
     //位置名称
     private String locationName;

@@ -16,6 +16,7 @@ import com.nutdiary.diary.base.BaseActivity;
 import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.AddDiaryContract;
+import com.nutdiary.diary.localData.UserData;
 import com.nutdiary.diary.presenter.AddDiaryPresenter;
 import com.nutdiary.diary.utils.InputUtil;
 import com.nutdiary.diary.utils.LocationUtil;
@@ -115,7 +116,7 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
                 String locationName = TextViewUtil.getString(locationTv); //地点名称
                 String mood = smileRating.getSmileName(smileRating.getSelectedSmile()); //心情
                 //保存
-                DiaryBean diaryBean = new DiaryBean(contentStr, 21, locationName, lat, lng, mood);
+                DiaryBean diaryBean = new DiaryBean(contentStr, UserData.getUserUUID(), locationName, lat, lng, mood);
                 addDiaryPresenter.saveItemData(diaryBean);
                 break;
             case R.id.location_tv:

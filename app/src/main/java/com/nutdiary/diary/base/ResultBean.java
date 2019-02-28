@@ -10,6 +10,7 @@ public class ResultBean{
     private int code;
     private String msg;
 
+
     public int getCode() {
         return code;
     }

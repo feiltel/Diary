@@ -42,7 +42,7 @@ public class AddDiaryPresenter extends BasePresenter {
                     @Override
                     public void onNext(@NonNull SaveResultBean saveResultBean) {
                         addDiaryView.showToast(saveResultBean.getMsg());
-                        if (saveResultBean.getCode() == 1) {
+                        if (saveResultBean.getCode() == 0) {
                             addDiaryView.finishSave();
                         }
                     }

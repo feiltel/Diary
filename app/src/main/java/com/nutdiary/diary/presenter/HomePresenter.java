@@ -34,7 +34,10 @@ public class HomePresenter extends BasePresenter {
                     @Override
                     public void onNext(@NonNull MainListBean mainListBean) {
                         homeView.finishLoadMore();
-                        homeView.addDataAndRefresh(mainListBean.getList());
+                        if (mainListBean.getCode()==0){
+                            homeView.addDataAndRefresh(mainListBean.getList());
+                        }
+
                     }
 
                     @Override
@@ -59,7 +62,7 @@ public class HomePresenter extends BasePresenter {
                 .subscribe(new DefaultObserver<ResultBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull ResultBean resultBean) {
-                        if (resultBean.getCode() == 1) {
+                        if (resultBean.getCode() == 0) {
                             homeView.removeItem(listPos);
                         } else {
                             homeView.showToast(resultBean.getMsg());

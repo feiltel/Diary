@@ -1,6 +1,7 @@
 package com.nutdiary.diary.model;
 
 import com.nutdiary.diary.base.ResultBean;
+import com.nutdiary.diary.bean.LoginResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.contract.LoginContract;
@@ -22,7 +23,7 @@ public class LoginModel implements LoginContract.LoginModel {
 
 
     @Override
-    public Observable<ResultBean> userLogin(String phone, String pass) {
+    public Observable<LoginResultBean> userLogin(String phone, String pass) {
         return retrofitService.userLogin(phone,pass);
     }
 }
