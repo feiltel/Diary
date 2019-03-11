@@ -10,8 +10,8 @@ public class Constant {
     /**
      * 服务器地址
      */
-    //public static final String SERVER_URL = "http://nutstudio.net:8083/diary/";
-   public static final String SERVER_URL = "http://192.168.31.196:8083/diary/";
+    public static final String SERVER_URL = "http://nutstudio.net:8083/diary/";
+   //public static final String SERVER_URL = "http://192.168.31.196:8083/diary/";
 
     /**
      * 接口请求地址

@@ -82,21 +82,12 @@ public class HomeActivity extends BaseActivity
         setSupportActionBar(toolbar);
         titleTv.setText("坚果手记");
     }
-
-    private void initRecyclerView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        commonAdapter = new CommonAdapter<DiaryBean>(this, R.layout.main_list_item, mainListItemList) {
-            @Override
-            protected void convert(ViewHolder holder, DiaryBean mainListItem, int position) {
-                holder.setText(R.id.content_tv, mainListItem.getContent());
-                holder.setText(R.id.date_tv, mainListItem.getLocationName());
-                holder.setText(R.id.weather_tv, mainListItem.getMood());
-            }
-        };
-        commonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                final DiaryBean diaryBean = mainListItemList.get(position);
+    private int clickPos=-1;
+    private View.OnClickListener onDeleteClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (clickPos>=0){
+                final DiaryBean diaryBean = mainListItemList.get(clickPos);
                 new PromptDialog(HomeActivity.this)
                         .setDialogType(PromptDialog.DIALOG_TYPE_WARNING)
                         .setAnimationEnable(true)
@@ -106,9 +97,30 @@ public class HomeActivity extends BaseActivity
                             @Override
                             public void onClick(PromptDialog dialog) {
                                 dialog.dismiss();
-                                homePresenter.deleteItem(diaryBean.getId(), position);
+                                homePresenter.deleteItem(diaryBean.getId(), clickPos);
                             }
                         }).show();
+            }
+
+        }
+    };
+
+    private void initRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        commonAdapter = new CommonAdapter<DiaryBean>(this, R.layout.main_list_item, mainListItemList) {
+            @Override
+            protected void convert(ViewHolder holder, DiaryBean mainListItem, int position) {
+                holder.setText(R.id.content_tv, mainListItem.getContent());
+                holder.setText(R.id.date_tv, mainListItem.getLocationName());
+                holder.setText(R.id.weather_tv, mainListItem.getMood());
+                holder.setOnClickListener(R.id.delete_tv, onDeleteClickListener);
+            }
+        };
+        commonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                clickPos=position;
+                MyToast.showToast(position+"");
             }
 
             @Override

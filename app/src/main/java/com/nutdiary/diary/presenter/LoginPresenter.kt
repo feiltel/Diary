@@ -1,14 +1,12 @@
 package com.nutdiary.diary.presenter
 
 import com.nutdiary.diary.base.BasePresenter
-import com.nutdiary.diary.base.ResultBean
 import com.nutdiary.diary.bean.LoginResultBean
 import com.nutdiary.diary.contract.LoginContract
 import com.nutdiary.diary.localData.UserData
 import com.nutdiary.diary.model.LoginModel
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.android.ActivityEvent
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DefaultObserver
 import io.reactivex.schedulers.Schedulers
