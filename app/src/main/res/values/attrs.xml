@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TaskView">
+        <attr name="ring_color" format="color" />
+        <attr name="ring_width" format="dimension" />
+        <attr name="start_angle" format="integer" />
+        <attr name="end_angle" format="integer" />
+    </declare-styleable>
+</resources>
