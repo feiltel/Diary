@@ -12,5 +12,6 @@
 
 
 #### 软件架构
-MVP retrofit2 butterknife rxandroid
+
+MVP retrofit2 butterKnife rxAndroid
 
