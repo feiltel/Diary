@@ -18,34 +18,24 @@ import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.AddDiaryContract;
 import com.nutdiary.diary.localData.UserData;
 import com.nutdiary.diary.presenter.AddDiaryPresenter;
-import com.nutdiary.diary.utils.InputUtil;
-import com.nutdiary.diary.utils.LocationUtil;
-import com.nutdiary.diary.utils.MyPermissionUtils;
-import com.nutdiary.diary.utils.PhoneUtil;
-import com.nutdiary.diary.utils.TextViewUtil;
+import com.nutdiary.diary.baselibrary.utils.InputUtil;
+import com.nutdiary.diary.baselibrary.utils.LocationUtil;
+import com.nutdiary.diary.baselibrary.utils.MyPermissionUtils;
+import com.nutdiary.diary.baselibrary.utils.PhoneUtil;
+import com.nutdiary.diary.baselibrary.utils.TextViewUtil;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import static com.nutdiary.diary.baselibrary.utils.MyPermissionUtils.ACCESS_COARSE_LOCATION_REQUEST_CODE;
 
-import static com.nutdiary.diary.utils.MyPermissionUtils.ACCESS_COARSE_LOCATION_REQUEST_CODE;
+public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.AddDiaryView, View.OnClickListener {
 
-public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.AddDiaryView {
+    private TextView titleTv;
+    private Toolbar toolbar;
+    private TextView rightTv;
 
-    @BindView(R.id.title_tv)
-    TextView titleTv;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.right_tv)
-    TextView rightTv;
-    @BindView(R.id.content_et)
-    EditText contentEt;
-    @BindView(R.id.location_tv)
-    TextView locationTv;
-    @BindView(R.id.smile_rating)
-    SmileRating smileRating;
-    @BindView(R.id.phone_name_tv)
-    TextView phoneNameTv;
+    private EditText contentEt;
+    private SmileRating smileRating;
+    private TextView locationTv;
+    private TextView phoneNameTv;
 
     private AddDiaryPresenter addDiaryPresenter;
     private double lat, lng;
@@ -54,15 +44,31 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
         addDiaryPresenter = new AddDiaryPresenter(this, this);
-        ButterKnife.bind(this);
         initView();
+        initEvent();
         getAddressInfo();
 
     }
 
+    private void initEvent() {
+        locationTv.setOnClickListener(this);
+        rightTv.setOnClickListener(this);
+    }
+
 
     private void initView() {
+        this.titleTv = findViewById(R.id.title_tv);
+        this.toolbar = findViewById(R.id.toolbar);
+        this.rightTv = findViewById(R.id.right_tv);
+
+        this.phoneNameTv = findViewById(R.id.phone_name_tv);
+        this.locationTv = findViewById(R.id.location_tv);
+        this.smileRating = findViewById(R.id.smile_rating);
+        this.contentEt = findViewById(R.id.content_et);
+
+
         initToolBar();
         rightTv.setVisibility(View.VISIBLE);
         rightTv.setText("保存");
@@ -107,25 +113,6 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
     }
 
 
-    @OnClick({R.id.right_tv, R.id.location_tv})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.right_tv:
-                //保存按钮
-                String contentStr = TextViewUtil.getString(contentEt); //日记内容
-                String locationName = TextViewUtil.getString(locationTv); //地点名称
-                String mood = smileRating.getSmileName(smileRating.getSelectedSmile()); //心情
-                //保存
-                DiaryBean diaryBean = new DiaryBean(contentStr, UserData.getUserUUID(), locationName, lat, lng, mood);
-                addDiaryPresenter.saveItemData(diaryBean);
-                break;
-            case R.id.location_tv:
-                //获取位置信息
-                getAddressInfo();
-                break;
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -153,5 +140,24 @@ public class AddDiaryActivity extends BaseActivity implements AddDiaryContract.A
     @Override
     public void finishSave() {
         super.finish();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.right_tv:
+                //保存按钮
+                String contentStr = TextViewUtil.getString(contentEt); //日记内容
+                String locationName = TextViewUtil.getString(locationTv); //地点名称
+                String mood = smileRating.getSmileName(smileRating.getSelectedSmile()); //心情
+                //保存
+                DiaryBean diaryBean = new DiaryBean(contentStr, UserData.getUserUUID(), locationName, lat, lng, mood);
+                addDiaryPresenter.saveItemData(diaryBean);
+                break;
+            case R.id.location_tv:
+                //获取位置信息
+                getAddressInfo();
+                break;
+        }
     }
 }

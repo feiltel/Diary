@@ -26,7 +26,7 @@ import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.localData.UserData;
 import com.nutdiary.diary.presenter.HomePresenter;
-import com.nutdiary.diary.utils.MyPermissionUtils;
+import com.nutdiary.diary.baselibrary.utils.MyPermissionUtils;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
@@ -34,27 +34,21 @@ import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.refactor.lib.colordialog.PromptDialog;
 
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeContract.HomeView {
 
-    @BindView(R.id.title_tv)
-    TextView titleTv;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-    @BindView(R.id.nav_view)
-    NavigationView navView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
+    private TextView titleTv;
+    private Toolbar toolbar;
+    private TextView rightTv;
+
+
+    private  RecyclerView recyclerView;
+    private  FloatingActionButton fab;
+    private NavigationView navView;
+    private  DrawerLayout drawerLayout;
+    private SmartRefreshLayout refreshLayout;
 
     private HomePresenter homePresenter;
     private CommonAdapter<DiaryBean> commonAdapter;
@@ -68,9 +62,7 @@ public class HomeActivity extends BaseActivity
         //权限请求
         MyPermissionUtils.checkAndRequests(this, 12);
         setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
         homePresenter = new HomePresenter(this, this);
-
         initView();
         initEvent();
         homePresenter.getListData(1);
@@ -144,6 +136,18 @@ public class HomeActivity extends BaseActivity
     }
 
     private void initView() {
+        this.titleTv = findViewById(R.id.title_tv);
+        this.toolbar = findViewById(R.id.toolbar);
+        this.rightTv = findViewById(R.id.right_tv);
+
+        this.recyclerView=findViewById(R.id.recycler_view);
+        this.fab=findViewById(R.id.fab);
+        this.navView=findViewById(R.id.nav_view);
+        this.drawerLayout=findViewById(R.id.drawer_layout);
+        this.refreshLayout=findViewById(R.id.refreshLayout);
+
+
+
         initToolBar();
         initNavigation();
         initRecyclerView();

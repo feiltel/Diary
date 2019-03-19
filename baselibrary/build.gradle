@@ -1,18 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-
-
-
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
 
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -26,9 +22,36 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:28.+'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //support_v4
+    api rootProject.ext.dependencies.appcompat_v7
+    api rootProject.ext.dependencies.support_v4
+    api rootProject.ext.dependencies.recyclerview
+    api rootProject.ext.dependencies.design
+    api rootProject.ext.dependencies.constraint
+
+
+
+    api rootProject.ext.dependencies.retrofit
+    api rootProject.ext.dependencies.converter_gson
+    api rootProject.ext.dependencies.adapter_rxjava2
+
+
+    api rootProject.ext.dependencies.rxandroid
+    api rootProject.ext.dependencies.rxlifecycle_components
+
+    api rootProject.ext.dependencies.okhttp
+    api rootProject.ext.dependencies.logging_interceptor
+
+    api rootProject.ext.dependencies.kprogresshud
+    api rootProject.ext.dependencies.SmartRefreshLayout
+    api rootProject.ext.dependencies.SmartRefreshHeader
+    api rootProject.ext.dependencies.smileyrating
+    api rootProject.ext.dependencies.ColorDialog
+    api rootProject.ext.dependencies.swipeitemlayout
+
+
 }

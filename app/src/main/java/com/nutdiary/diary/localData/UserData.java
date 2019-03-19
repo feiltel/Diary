@@ -1,7 +1,7 @@
 package com.nutdiary.diary.localData;
 
 import com.nutdiary.diary.app.MyApp;
-import com.nutdiary.diary.utils.PreferencesUtils;
+import com.nutdiary.diary.baselibrary.utils.PreferencesUtils;
 
 public class UserData {
     private static String USER_DATA_FILE_NAME="UserData";

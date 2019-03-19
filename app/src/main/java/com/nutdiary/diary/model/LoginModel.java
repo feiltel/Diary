@@ -1,11 +1,8 @@
 package com.nutdiary.diary.model;
 
-import com.nutdiary.diary.base.ResultBean;
 import com.nutdiary.diary.bean.LoginResultBean;
-import com.nutdiary.diary.bean.MainListBean;
-import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.contract.LoginContract;
-import com.nutdiary.diary.network.RetrofitHelper;
+import com.nutdiary.diary.baselibrary.network.RetrofitHelper;
 import com.nutdiary.diary.network.RetrofitService;
 
 import io.reactivex.Observable;
@@ -18,7 +15,7 @@ public class LoginModel implements LoginContract.LoginModel {
     private RetrofitService retrofitService;
 
     public LoginModel() {
-        retrofitService = RetrofitHelper.getInstance().getRetrofitService();
+        retrofitService = RetrofitHelper.getInstance().getApiService(RetrofitService.class);
     }
 
 

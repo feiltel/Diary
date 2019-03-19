@@ -8,16 +8,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.nutdiary.diary.R;
-import com.nutdiary.diary.bean.CommitsBase;
-import com.nutdiary.diary.bean.Day;
-import com.nutdiary.diary.component.TaskView;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -41,7 +33,8 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> jumAndFinish(), 1000);
 
     }
-    private Point getScreenSize(Context context){
+
+    private Point getScreenSize(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();

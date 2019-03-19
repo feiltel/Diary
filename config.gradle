@@ -1,0 +1,60 @@
+/**
+ * 统一处理依赖问题
+ */
+
+ext {
+    android = [
+            compileSdkVersion: 28,
+            minSdkVersion    : 21,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+    libsVersion = [
+            supportLibraryVersion = "28.0.0",
+            constraint_layout = "1.1.3",
+            retrofit2Version = "2.3.0",
+            rxjava2Version = "2.0.1",
+            okhttp3Version = "3.4.1",
+
+            kprogresshud = "1.2.0",
+            smartrefresh = "1.1.0-alpha-20",
+            smileyrating = "1.6.8",
+            ColorDialog = "1.0.0",
+            swipeitemlayout = "1.0.4@aar",
+    ]
+
+    dependencies = [
+            appcompat_v7          : "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion",
+            support_v4            : "com.android.support:support-v4:$rootProject.supportLibraryVersion",
+            recyclerview          : "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion",
+            design                : "com.android.support:design:$rootProject.supportLibraryVersion",
+            constraint            : "com.android.support.constraint:constraint-layout:$rootProject.constraint_layout",
+
+
+            retrofit              : "com.squareup.retrofit2:retrofit:$rootProject.retrofit2Version",
+            converter_gson        : "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2Version",
+            adapter_rxjava2       : "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit2Version",
+
+            rxandroid             : "io.reactivex.rxjava2:rxandroid:$rootProject.rxjava2Version",
+            rxlifecycle_components: "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxjava2Version",
+
+
+            okhttp                : "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version",
+            logging_interceptor   : "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version",
+
+
+            kprogresshud          : "com.kaopiz:kprogresshud:$rootProject.kprogresshud",
+
+            SmartRefreshLayout    : "com.scwang.smartrefresh:SmartRefreshLayout:$rootProject.smartrefresh",
+            SmartRefreshHeader    : "com.scwang.smartrefresh:SmartRefreshHeader:$rootProject.smartrefresh",
+
+
+            smileyrating          : "com.github.sujithkanna:smileyrating:$rootProject.smileyrating",
+            ColorDialog           : "com.github.andyxialm:ColorDialog:$rootProject.ColorDialog",
+
+            swipeitemlayout       : "cn.bingoogolapple:bga-swipeitemlayout:$rootProject.swipeitemlayout"
+
+
+    ]
+}

@@ -3,7 +3,7 @@ package com.nutdiary.diary.model;
 import com.nutdiary.diary.base.ResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.contract.HomeContract;
-import com.nutdiary.diary.network.RetrofitHelper;
+import com.nutdiary.diary.baselibrary.network.RetrofitHelper;
 import com.nutdiary.diary.network.RetrofitService;
 
 import io.reactivex.Observable;
@@ -16,7 +16,7 @@ public class HomeModel implements HomeContract.HomeModel {
     private RetrofitService retrofitService;
 
     public HomeModel() {
-        retrofitService = RetrofitHelper.getInstance().getRetrofitService();
+        retrofitService = RetrofitHelper.getInstance().getApiService(RetrofitService.class);
     }
 
     @Override

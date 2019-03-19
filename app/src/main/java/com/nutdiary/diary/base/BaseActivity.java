@@ -16,5 +16,7 @@ public class BaseActivity extends RxAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myLoadDialog=new MyLoadDialog(this);
+
     }
+
 }

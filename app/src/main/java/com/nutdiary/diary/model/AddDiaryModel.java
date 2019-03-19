@@ -6,7 +6,7 @@ import com.nutdiary.diary.bean.SaveResultBean;
 import com.nutdiary.diary.bean.UploadBean;
 import com.nutdiary.diary.contract.AddDiaryContract;
 import com.nutdiary.diary.network.Constant;
-import com.nutdiary.diary.network.RetrofitHelper;
+import com.nutdiary.diary.baselibrary.network.RetrofitHelper;
 import com.nutdiary.diary.network.RetrofitService;
 
 import io.reactivex.Observable;
@@ -20,7 +20,7 @@ public class AddDiaryModel implements AddDiaryContract.AddDiaryModel {
     private RetrofitService retrofitService;
 
     public AddDiaryModel() {
-        retrofitService = RetrofitHelper.getInstance().getRetrofitService();
+        retrofitService = RetrofitHelper.getInstance().getApiService(RetrofitService.class);
     }
 
 
