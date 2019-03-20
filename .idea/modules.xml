@@ -5,10 +5,10 @@
       <module fileurl="file://$PROJECT_DIR$/Diary.iml" filepath="$PROJECT_DIR$/Diary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/diarylibrary/diarylibrary.iml" filepath="$PROJECT_DIR$/diarylibrary/diarylibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/loginlibrary/loginlibrary.iml" filepath="$PROJECT_DIR$/loginlibrary/loginlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/planlibrary/planlibrary.iml" filepath="$PROJECT_DIR$/planlibrary/planlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/planmodule/planmodule.iml" filepath="$PROJECT_DIR$/planmodule/planmodule.iml" />
     </modules>
   </component>
 </project>

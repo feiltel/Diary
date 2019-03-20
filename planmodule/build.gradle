@@ -1,15 +1,23 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+if (isModule.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+
+
     defaultConfig {
-        applicationId "com.nutdiary.diary"
+        if (isModule.toBoolean()) {
+            applicationId "com.nutdiary.diary.plan"
+        }
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         //ARouter
@@ -18,16 +26,28 @@ android {
                 arguments = [moduleName: project.getName()]
             }
         }
+
     }
+
+    sourceSets {
+        main {
+            if (isModule.toBoolean()) {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                //集成开发模式下则需要排除debug文件夹中的所有Java文件
+                java {
+                    exclude 'debug/**'
+                }
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
     }
 
 }
@@ -37,17 +57,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-//multidex
-    implementation rootProject.ext.dependencies.multidex
-    //kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     annotationProcessor rootProject.ext.dependencies.arouter_compiler
+
     implementation project(':baselibrary')
-    if (!isModule.toBoolean()) {
-        implementation project(':planmodule')
-    }
-}
-repositories {
-    mavenCentral()
 }

@@ -1,5 +1,6 @@
 package com.nutdiary.diary.view
 
+import android.app.Activity
 import android.os.Bundle
 import com.nutdiary.diary.R
 import com.nutdiary.diary.base.BaseActivity
@@ -22,7 +23,7 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView {
     }
 
     override fun jumpMain() {
-        setResult(0)
+        setResult(Activity.RESULT_OK)
         super.finish()
     }
 

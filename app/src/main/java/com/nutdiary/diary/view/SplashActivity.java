@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 import com.nutdiary.diary.R;
 
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override

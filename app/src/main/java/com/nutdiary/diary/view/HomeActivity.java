@@ -16,17 +16,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.nutdiary.diary.R;
 import com.nutdiary.diary.base.BaseActivity;
 import com.nutdiary.diary.base.BaseRecyclerView.CommonAdapter;
 import com.nutdiary.diary.base.BaseRecyclerView.MultiItemTypeAdapter;
 import com.nutdiary.diary.base.BaseRecyclerView.baseIn.ViewHolder;
+import com.nutdiary.diary.baselibrary.utils.MyPermissionUtils;
 import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.localData.UserData;
 import com.nutdiary.diary.presenter.HomePresenter;
-import com.nutdiary.diary.baselibrary.utils.MyPermissionUtils;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
@@ -38,16 +39,17 @@ import cn.refactor.lib.colordialog.PromptDialog;
 
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeContract.HomeView {
+    private static final int jump2loginRequestCode = 21;
 
     private TextView titleTv;
     private Toolbar toolbar;
     private TextView rightTv;
 
 
-    private  RecyclerView recyclerView;
-    private  FloatingActionButton fab;
+    private RecyclerView recyclerView;
+    private FloatingActionButton fab;
     private NavigationView navView;
-    private  DrawerLayout drawerLayout;
+    private DrawerLayout drawerLayout;
     private SmartRefreshLayout refreshLayout;
 
     private HomePresenter homePresenter;
@@ -74,28 +76,7 @@ public class HomeActivity extends BaseActivity
         setSupportActionBar(toolbar);
         titleTv.setText("坚果手记");
     }
-    private int clickPos=-1;
-    private View.OnClickListener onDeleteClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (clickPos>=0){
-                final DiaryBean diaryBean = mainListItemList.get(clickPos);
-                new PromptDialog(HomeActivity.this)
-                        .setDialogType(PromptDialog.DIALOG_TYPE_WARNING)
-                        .setAnimationEnable(true)
-                        .setTitleText("删除")
-                        .setContentText("确定要删除这条记录吗？")
-                        .setPositiveListener("确定", new PromptDialog.OnPositiveListener() {
-                            @Override
-                            public void onClick(PromptDialog dialog) {
-                                dialog.dismiss();
-                                homePresenter.deleteItem(diaryBean.getId(), clickPos);
-                            }
-                        }).show();
-            }
 
-        }
-    };
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -105,14 +86,28 @@ public class HomeActivity extends BaseActivity
                 holder.setText(R.id.content_tv, mainListItem.getContent());
                 holder.setText(R.id.date_tv, mainListItem.getLocationName());
                 holder.setText(R.id.weather_tv, mainListItem.getMood());
-                holder.setOnClickListener(R.id.delete_tv, onDeleteClickListener);
+                holder.setOnClickListener(R.id.delete_tv, view -> {
+                    if (position < mainListItemList.size()) {
+                        DiaryBean diaryBean = mainListItemList.get(position);
+                        new PromptDialog(HomeActivity.this)
+                                .setDialogType(PromptDialog.DIALOG_TYPE_WARNING)
+                                .setAnimationEnable(true)
+                                .setTitleText("删除")
+                                .setContentText("确定要删除这条记录吗？")
+                                .setPositiveListener("确定", dialog -> {
+                                    dialog.dismiss();
+                                    homePresenter.deleteItem(diaryBean.getId(), position);
+                                }).show();
+                    }
+
+                });
             }
         };
         commonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                clickPos=position;
-                MyToast.showToast(position+"");
+
+
             }
 
             @Override
@@ -140,12 +135,11 @@ public class HomeActivity extends BaseActivity
         this.toolbar = findViewById(R.id.toolbar);
         this.rightTv = findViewById(R.id.right_tv);
 
-        this.recyclerView=findViewById(R.id.recycler_view);
-        this.fab=findViewById(R.id.fab);
-        this.navView=findViewById(R.id.nav_view);
-        this.drawerLayout=findViewById(R.id.drawer_layout);
-        this.refreshLayout=findViewById(R.id.refreshLayout);
-
+        this.recyclerView = findViewById(R.id.recycler_view);
+        this.fab = findViewById(R.id.fab);
+        this.navView = findViewById(R.id.nav_view);
+        this.drawerLayout = findViewById(R.id.drawer_layout);
+        this.refreshLayout = findViewById(R.id.refreshLayout);
 
 
         initToolBar();
@@ -158,7 +152,7 @@ public class HomeActivity extends BaseActivity
             if (UserData.getUserUUID().length() > 5) {
                 startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
             } else {
-                startActivityForResult(new Intent(HomeActivity.this, AddDiaryActivity.class), 21);
+                startActivityForResult(new Intent(HomeActivity.this, LoginActivity.class), jump2loginRequestCode);
             }
         });
     }
@@ -210,6 +204,7 @@ public class HomeActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_user_center) {
+            ARouter.getInstance().build("/plan/PlanActivity").navigation();
             // Handle the camera action
         }
 
@@ -261,8 +256,8 @@ public class HomeActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 21 && resultCode == 0) {
-            startActivity(new Intent(this, AddDiaryActivity.class));
+        if (requestCode == jump2loginRequestCode && resultCode == RESULT_OK) {
+            startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
         }
     }
 

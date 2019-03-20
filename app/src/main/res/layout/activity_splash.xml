@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/white"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <ImageView
@@ -11,37 +10,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-       />
-    <com.nutdiary.diary.component.TaskView
-        android:layout_centerInParent="true"
-        android:layout_width="132dp"
-        app:ring_width="24dp"
-        app:start_angle="0"
-        app:end_angle="90"
-        app:ring_color="#F2472F"
-        android:layout_height="300dp" />
-    <com.nutdiary.diary.component.TaskView
-        android:layout_centerInParent="true"
-        android:layout_width="188dp"
-        app:ring_width="24dp"
-        app:start_angle="90"
-        app:end_angle="180"
-        app:ring_color="#FFA507"
-        android:layout_height="300dp" />
-    <com.nutdiary.diary.component.TaskView
-        android:layout_centerInParent="true"
-        android:layout_width="244dp"
-        app:ring_width="24dp"
-        app:start_angle="180"
-        app:end_angle="270"
-        app:ring_color="#1DC469"
-        android:layout_height="300dp" />
-    <com.nutdiary.diary.component.TaskView
-        android:layout_centerInParent="true"
-        android:layout_width="300dp"
-        app:ring_width="24dp"
-        app:start_angle="0"
-        app:end_angle="360"
-        app:ring_color="#711CFC"
-        android:layout_height="300dp" />
+        android:src="@mipmap/ic_launcher" />
+    <!-- <com.nutdiary.diary.component.TaskView
+         android:layout_centerInParent="true"
+         android:layout_width="132dp"
+         app:ring_width="24dp"
+         app:start_angle="0"
+         app:end_angle="90"
+         app:ring_color="#F2472F"
+         android:layout_height="300dp" />
+     <com.nutdiary.diary.component.TaskView
+         android:layout_centerInParent="true"
+         android:layout_width="188dp"
+         app:ring_width="24dp"
+         app:start_angle="90"
+         app:end_angle="180"
+         app:ring_color="#FFA507"
+         android:layout_height="300dp" />
+     <com.nutdiary.diary.component.TaskView
+         android:layout_centerInParent="true"
+         android:layout_width="244dp"
+         app:ring_width="24dp"
+         app:start_angle="180"
+         app:end_angle="270"
+         app:ring_color="#1DC469"
+         android:layout_height="300dp" />
+     <com.nutdiary.diary.component.TaskView
+         android:layout_centerInParent="true"
+         android:layout_width="300dp"
+         app:ring_width="24dp"
+         app:start_angle="0"
+         app:end_angle="360"
+         app:ring_color="#711CFC"
+         android:layout_height="300dp" />-->
 </RelativeLayout>
