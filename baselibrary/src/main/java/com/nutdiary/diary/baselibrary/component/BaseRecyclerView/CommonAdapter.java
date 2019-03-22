@@ -1,10 +1,10 @@
-package com.nutdiary.diary.base.BaseRecyclerView;
+package com.nutdiary.diary.baselibrary.component.BaseRecyclerView;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 
-import com.nutdiary.diary.base.BaseRecyclerView.baseIn.ItemViewDelegate;
-import com.nutdiary.diary.base.BaseRecyclerView.baseIn.ViewHolder;
+import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.baseIn.ItemViewDelegate;
+import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.baseIn.ViewHolder;
 
 import java.util.List;
 

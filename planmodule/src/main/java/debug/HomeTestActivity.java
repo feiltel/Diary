@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.nutdiary.diary.plan.PlanActivity;
+import com.nutdiary.diary.plan.view.PlanActivity;
 import com.nutdiary.diary.plan.R;
 
 public class HomeTestActivity extends AppCompatActivity {

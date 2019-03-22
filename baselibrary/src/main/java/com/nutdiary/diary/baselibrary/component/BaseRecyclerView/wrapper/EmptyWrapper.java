@@ -1,12 +1,12 @@
-package com.nutdiary.diary.base.BaseRecyclerView.wrapper;
+package com.nutdiary.diary.baselibrary.component.BaseRecyclerView.wrapper;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nutdiary.diary.base.BaseRecyclerView.baseIn.ViewHolder;
-import com.nutdiary.diary.base.BaseRecyclerView.utils.WrapperUtils;
+import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.baseIn.ViewHolder;
+import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.utils.WrapperUtils;
 
 
 /**

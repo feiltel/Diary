@@ -1,4 +1,4 @@
-package com.nutdiary.diary.base.BaseRecyclerView.utils;
+package com.nutdiary.diary.baselibrary.component.BaseRecyclerView.utils;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;

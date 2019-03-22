@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme">
-        <activity android:name=".PlanActivity"></activity>
+        <activity android:name=".view.PlanActivity"></activity>
         <activity android:name="debug.HomeTestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

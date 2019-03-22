@@ -1,4 +1,4 @@
-package com.nutdiary.diary.base.BaseRecyclerView.baseIn;
+package com.nutdiary.diary.baselibrary.component.BaseRecyclerView.baseIn;
 
 import android.support.v4.util.SparseArrayCompat;
 
