@@ -35,4 +35,9 @@ public class PlanActivity extends AppCompatActivity {
             }
         };
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
