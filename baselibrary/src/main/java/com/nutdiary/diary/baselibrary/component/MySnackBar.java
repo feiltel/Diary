@@ -1,4 +1,4 @@
-package com.nutdiary.diary.component;
+package com.nutdiary.diary.baselibrary.component;
 
 import android.support.design.widget.Snackbar;
 import android.view.View;

@@ -1,6 +1,6 @@
-package com.nutdiary.diary.bean;
+package com.nutdiary.diary.login.login;
 
-import com.nutdiary.diary.base.ResultBean;
+import com.nutdiary.diary.baselibrary.base.ResultBean;
 
 /**
  * Author:Administrator

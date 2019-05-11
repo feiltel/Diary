@@ -1,4 +1,4 @@
-package com.nutdiary.diary.base;
+package com.nutdiary.diary.baselibrary.base;
 
 public interface BaseView {
 

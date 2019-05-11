@@ -33,7 +33,6 @@
         <activity
             android:name=".view.AddDiaryActivity"
             android:label="@string/title_activity_add" />
-        <activity android:name=".view.LoginActivity" />
         <activity android:name=".view.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>

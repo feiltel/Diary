@@ -2,12 +2,11 @@ package com.nutdiary.diary.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.nutdiary.diary.base.BasePresenter;
+import com.nutdiary.diary.baselibrary.base.BasePresenter;
 import com.nutdiary.diary.bean.AddressBean;
 import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.bean.SaveResultBean;
 import com.nutdiary.diary.contract.AddDiaryContract;
-import com.nutdiary.diary.baselibrary.utils.LocationUtil;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 

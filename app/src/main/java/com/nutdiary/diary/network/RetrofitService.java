@@ -1,9 +1,9 @@
 package com.nutdiary.diary.network;
 
-import com.nutdiary.diary.base.ResultBean;
+import com.nutdiary.diary.baselibrary.base.ResultBean;
 import com.nutdiary.diary.bean.AddressBean;
 import com.nutdiary.diary.bean.DiaryBean;
-import com.nutdiary.diary.bean.LoginResultBean;
+import com.nutdiary.diary.login.login.LoginResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.SaveResultBean;
 import com.nutdiary.diary.bean.UploadBean;

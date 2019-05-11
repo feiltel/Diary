@@ -1,8 +1,6 @@
 package com.nutdiary.diary.bean;
 
-import com.nutdiary.diary.base.ResultBean;
-
-import java.util.List;
+import com.nutdiary.diary.baselibrary.base.ResultBean;
 
 /**
  * Author:Administrator

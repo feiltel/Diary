@@ -1,6 +1,6 @@
 package com.nutdiary.diary.bean;
 
-import com.nutdiary.diary.base.ResultBean;
+import com.nutdiary.diary.baselibrary.base.ResultBean;
 
 import java.util.List;
 

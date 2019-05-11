@@ -18,15 +18,14 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.nutdiary.diary.R;
-import com.nutdiary.diary.base.BaseActivity;
+import com.nutdiary.diary.baselibrary.base.BaseActivity;
 import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.CommonAdapter;
 import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.MultiItemTypeAdapter;
 import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.baseIn.ViewHolder;
 import com.nutdiary.diary.baselibrary.utils.MyPermissionUtils;
 import com.nutdiary.diary.bean.DiaryBean;
-import com.nutdiary.diary.component.MyToast;
 import com.nutdiary.diary.contract.HomeContract;
-import com.nutdiary.diary.localData.UserData;
+import com.nutdiary.diary.login.UserData;
 import com.nutdiary.diary.presenter.HomePresenter;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -149,10 +148,10 @@ public class HomeActivity extends BaseActivity
 
     private void initEvent() {
         fab.setOnClickListener(view -> {
-            if (UserData.getUserUUID().length() > 5) {
+            if (UserData.getUserUUID(this).length() > 5) {
                 startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
             } else {
-                startActivityForResult(new Intent(HomeActivity.this, LoginActivity.class), jump2loginRequestCode);
+                //  startActivityForResult(new Intent(HomeActivity.this, LoginActivity.class), jump2loginRequestCode);
             }
         });
     }
@@ -204,7 +203,8 @@ public class HomeActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_user_center) {
-            ARouter.getInstance().build("/plan/PlanActivity").navigation();
+            //  ARouter.getInstance().build("/plan/PlanActivity").navigation();
+            ARouter.getInstance().build("/login/LoginMainActivity").navigation();
             // Handle the camera action
         }
 
@@ -214,7 +214,7 @@ public class HomeActivity extends BaseActivity
 
     @Override
     public void showToast(String msg) {
-        MyToast.showToast(msg);
+        showTip(msg);
     }
 
     @Override

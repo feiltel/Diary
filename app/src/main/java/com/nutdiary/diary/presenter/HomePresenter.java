@@ -2,8 +2,8 @@ package com.nutdiary.diary.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.nutdiary.diary.base.BasePresenter;
-import com.nutdiary.diary.base.ResultBean;
+import com.nutdiary.diary.baselibrary.base.BasePresenter;
+import com.nutdiary.diary.baselibrary.base.ResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.model.HomeModel;

@@ -46,6 +46,7 @@ dependencies {
     implementation project(':baselibrary')
     if (!isModule.toBoolean()) {
         implementation project(':planmodule')
+        implementation project(':loginmodule')
     }
 }
 repositories {

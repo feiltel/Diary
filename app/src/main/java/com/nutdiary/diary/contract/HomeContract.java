@@ -1,7 +1,7 @@
 package com.nutdiary.diary.contract;
 
-import com.nutdiary.diary.base.BaseView;
-import com.nutdiary.diary.base.ResultBean;
+import com.nutdiary.diary.baselibrary.base.BaseView;
+import com.nutdiary.diary.baselibrary.base.ResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.bean.DiaryBean;
 

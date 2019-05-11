@@ -1,6 +1,6 @@
 package com.nutdiary.diary.model;
 
-import com.nutdiary.diary.base.ResultBean;
+import com.nutdiary.diary.baselibrary.base.ResultBean;
 import com.nutdiary.diary.bean.MainListBean;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.baselibrary.network.RetrofitHelper;
