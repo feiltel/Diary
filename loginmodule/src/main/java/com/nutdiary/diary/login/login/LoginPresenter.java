@@ -3,6 +3,7 @@ package com.nutdiary.diary.login.login;
 import android.support.annotation.NonNull;
 
 import com.nutdiary.diary.baselibrary.base.BasePresenter;
+
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
@@ -24,7 +25,7 @@ public class LoginPresenter extends BasePresenter {
         homeModel.userLogin(phone, pass)
                 .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
                 .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
-                /*.compose(getProvider().bindUntilEvent(ActivityEvent.DESTROY))// onDestroy取消订阅*/
+             /*   .compose(getProvider().bindUntilEvent(ActivityEvent.DESTROY))// onDestroy取消订阅*/
                 .subscribe(new DefaultObserver<LoginResultBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull LoginResultBean resultBean) {

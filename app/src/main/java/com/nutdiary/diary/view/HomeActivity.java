@@ -148,8 +148,9 @@ public class HomeActivity extends BaseActivity
 
     private void initEvent() {
         fab.setOnClickListener(view -> {
+            startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
             if (UserData.getUserUUID(this).length() > 5) {
-                startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
+
             } else {
                 //  startActivityForResult(new Intent(HomeActivity.this, LoginActivity.class), jump2loginRequestCode);
             }
