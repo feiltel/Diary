@@ -13,28 +13,27 @@ import com.nutdiary.diary.login.UserData;
 @Route(path = "/login/LoginMainActivity")
 public class LoginMainActivity extends BaseActivity implements LoginContract.LoginView {
     private LoginPresenter loginPresenter;
-    private EditText userNameEt,passEt;
+    private EditText userNameEt, passEt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loginPresenter=new LoginPresenter(this,this);
         setContentView(R.layout.login_activity_main);
+        loginPresenter = new LoginPresenter(this, this);
         initView();
     }
 
     private void initView() {
-        userNameEt=findViewById(R.id.phone_number_et);
-        passEt=findViewById(R.id.ver_code_et);
+        userNameEt = findViewById(R.id.phone_number_et);
+        passEt = findViewById(R.id.ver_code_et);
         findViewById(R.id.click_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginPresenter.userLogin(userNameEt.getText().toString(), passEt.getText().toString());
+                loginPresenter.userLogin1(userNameEt.getText().toString(), passEt.getText().toString());
             }
         });
 
     }
-
-
 
 
     @Override
@@ -44,18 +43,18 @@ public class LoginMainActivity extends BaseActivity implements LoginContract.Log
 
     @Override
     public void showLoadDialog() {
-
+        myLoadDialog.show();
     }
 
     @Override
     public void hideLoadDialog() {
-
+        myLoadDialog.hide();
     }
 
     @Override
     public void jumpMain(LoginResultBean bean) {
         setResult(Activity.RESULT_OK);
-        UserData.saveUserUUID(this,bean.getData());
+        UserData.saveUserUUID(this, bean.getData());
         super.finish();
     }
 }
