@@ -21,16 +21,15 @@ public class LoginPresenter extends BasePresenter {
         homeModel = new LoginModel();
     }
 
-    public void userLogin(String phone, String pass) {
+    public void userLogin1(String phone, String pass) {
         homeModel.userLogin(phone, pass)
                 .subscribeOn(Schedulers.io()) // 在子线程中进行Http访问
                 .observeOn(AndroidSchedulers.mainThread()) // UI线程处理返回接口
-             /*   .compose(getProvider().bindUntilEvent(ActivityEvent.DESTROY))// onDestroy取消订阅*/
+                .compose(getProvider().<LoginResultBean>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new DefaultObserver<LoginResultBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull LoginResultBean resultBean) {
                         if (resultBean.getCode() == 0) {
-                            // UserData.saveUserUUID(loginViewresultBean.data)
                             homeView.jumpMain(resultBean);
                         }
                         homeView.showToast(resultBean.getMsg());
