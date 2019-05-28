@@ -2,6 +2,7 @@ package com.nutdiary.diary.baselibrary.component;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ import com.nutdiary.diary.baselibrary.R;
  */
 public class MyToast {
     public static void showToast(Context context, String text) {
-        showToast1(context, text, Toast.LENGTH_SHORT);
+        showToast1(context, text, Toast.LENGTH_LONG);
     }
 
     //系统原生toast
@@ -31,6 +32,7 @@ public class MyToast {
                 , null);
         TextView textView = view.findViewById(R.id.text);
         Toast mToast = Toast.makeText(context, text, duration);
+        mToast.setGravity(Gravity.TOP,0,0);
         mToast.setView(view);
         textView.setText(text);
         mToast.show();
