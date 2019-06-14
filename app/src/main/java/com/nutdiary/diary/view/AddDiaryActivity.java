@@ -13,15 +13,15 @@ import com.hsalf.smilerating.BaseRating;
 import com.hsalf.smilerating.SmileRating;
 import com.nutdiary.diary.R;
 import com.nutdiary.diary.baselibrary.base.BaseActivity;
-import com.nutdiary.diary.bean.DiaryBean;
-import com.nutdiary.diary.contract.AddDiaryContract;
-import com.nutdiary.diary.login.UserData;
-import com.nutdiary.diary.presenter.AddDiaryPresenter;
+import com.nutdiary.diary.baselibrary.base.UserData;
 import com.nutdiary.diary.baselibrary.utils.InputUtil;
 import com.nutdiary.diary.baselibrary.utils.LocationUtil;
 import com.nutdiary.diary.baselibrary.utils.MyPermissionUtils;
 import com.nutdiary.diary.baselibrary.utils.PhoneUtil;
 import com.nutdiary.diary.baselibrary.utils.TextViewUtil;
+import com.nutdiary.diary.bean.DiaryBean;
+import com.nutdiary.diary.contract.AddDiaryContract;
+import com.nutdiary.diary.presenter.AddDiaryPresenter;
 
 import static com.nutdiary.diary.baselibrary.utils.MyPermissionUtils.ACCESS_COARSE_LOCATION_REQUEST_CODE;
 

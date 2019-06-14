@@ -7,11 +7,12 @@ import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.nutdiary.diary.baselibrary.base.BaseActivity;
+import com.nutdiary.diary.baselibrary.base.TransparentActivity;
 import com.nutdiary.diary.login.R;
-import com.nutdiary.diary.login.UserData;
+import com.nutdiary.diary.baselibrary.base.UserData;
 
 @Route(path = "/login/LoginMainActivity")
-public class LoginMainActivity extends BaseActivity implements LoginContract.LoginView {
+public class LoginMainActivity extends TransparentActivity implements LoginContract.LoginView {
     private LoginPresenter loginPresenter;
     private EditText userNameEt, passEt;
 

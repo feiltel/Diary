@@ -48,6 +48,9 @@ dependencies {
         implementation project(':planmodule')
         implementation project(':loginmodule')
     }
+
+    implementation 'com.tencent.sonic:sdk:3.1.0'
+    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
 }
 repositories {
     mavenCentral()

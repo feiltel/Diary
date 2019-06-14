@@ -1,4 +1,4 @@
-package com.nutdiary.diary.login;
+package com.nutdiary.diary.baselibrary.base;
 
 import android.content.Context;
 
@@ -13,5 +13,9 @@ public class UserData {
 
     public static String getUserUUID(Context context) {
         return PreferencesUtils.getString(context, USER_DATA_FILE_NAME, "UserUUID");
+    }
+
+    public static boolean isLogin(Context context) {
+        return getUserUUID(context).length() > 0;
     }
 }

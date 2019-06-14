@@ -61,5 +61,8 @@ dependencies {
 
     api rootProject.ext.dependencies.arouter_api
 
+    api 'com.jaeger.statusbarutil:library:1.5.1'
+
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
 }

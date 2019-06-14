@@ -17,15 +17,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.nutdiary.diary.R;
 import com.nutdiary.diary.baselibrary.base.BaseActivity;
-import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.CommonAdapter;
+import com.nutdiary.diary.baselibrary.base.UserData;
 import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.MultiItemTypeAdapter;
-import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.baseIn.ViewHolder;
 import com.nutdiary.diary.baselibrary.utils.MyPermissionUtils;
 import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.contract.HomeContract;
-import com.nutdiary.diary.login.UserData;
 import com.nutdiary.diary.presenter.HomePresenter;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -52,7 +51,7 @@ public class HomeActivity extends BaseActivity
     private SmartRefreshLayout refreshLayout;
 
     private HomePresenter homePresenter;
-    private CommonAdapter<DiaryBean> commonAdapter;
+    private MainListAdapter commonAdapter;
     private List<DiaryBean> mainListItemList = new ArrayList<>();
     private int nowPageNumber = 1;
 
@@ -79,41 +78,24 @@ public class HomeActivity extends BaseActivity
 
     private void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        commonAdapter = new CommonAdapter<DiaryBean>(this, R.layout.main_list_item, mainListItemList) {
-            @Override
-            protected void convert(ViewHolder holder, DiaryBean mainListItem, int position) {
-                holder.setText(R.id.content_tv, mainListItem.getContent());
-                holder.setText(R.id.date_tv, mainListItem.getLocationName());
-                holder.setText(R.id.weather_tv, mainListItem.getMood());
-                holder.setOnClickListener(R.id.delete_tv, view -> {
-                    if (position < mainListItemList.size()) {
-                        DiaryBean diaryBean = mainListItemList.get(position);
-                        new PromptDialog(HomeActivity.this)
-                                .setDialogType(PromptDialog.DIALOG_TYPE_WARNING)
-                                .setAnimationEnable(true)
-                                .setTitleText("删除")
-                                .setContentText("确定要删除这条记录吗？")
-                                .setPositiveListener("确定", dialog -> {
-                                    dialog.dismiss();
-                                    homePresenter.deleteItem(diaryBean.getId(), position);
-                                }).show();
-                    }
+        commonAdapter = new MainListAdapter(R.layout.main_list_item, mainListItemList);
+        commonAdapter.setOnItemClickListener((adapter, view, position) -> {
 
-                });
-            }
-        };
-        commonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-
-
-            }
-
-            @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                return false;
-            }
         });
+
+        commonAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            DiaryBean diaryBean = mainListItemList.get(position);
+            new PromptDialog(HomeActivity.this)
+                    .setDialogType(PromptDialog.DIALOG_TYPE_WARNING)
+                    .setAnimationEnable(true)
+                    .setTitleText("删除")
+                    .setContentText("确定要删除这条记录吗？")
+                    .setPositiveListener("确定", dialog -> {
+                        dialog.dismiss();
+                        homePresenter.deleteItem(diaryBean.getId(), position);
+                    }).show();
+        });
+
         recyclerView.setAdapter(commonAdapter);
 
         refreshLayout.setOnRefreshListener(refreshLayout -> {
@@ -121,7 +103,6 @@ public class HomeActivity extends BaseActivity
             homePresenter.getFirstListData(nowPageNumber);
         });
         refreshLayout.setOnLoadMoreListener(refreshLayout -> {
-
             homePresenter.getListData(nowPageNumber);
         });
 
@@ -148,11 +129,10 @@ public class HomeActivity extends BaseActivity
 
     private void initEvent() {
         fab.setOnClickListener(view -> {
-            startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
-            if (UserData.getUserUUID(this).length() > 5) {
-
+            if (UserData.isLogin(this)) {
+                startActivity(new Intent(HomeActivity.this, AddDiaryActivity.class));
             } else {
-                //  startActivityForResult(new Intent(HomeActivity.this, LoginActivity.class), jump2loginRequestCode);
+                ARouter.getInstance().build("/login/LoginMainActivity").navigation();
             }
         });
     }
@@ -212,6 +192,7 @@ public class HomeActivity extends BaseActivity
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     public void showToast(String msg) {

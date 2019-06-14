@@ -3,6 +3,7 @@ package com.nutdiary.diary.baselibrary.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.jaeger.library.StatusBarUtil;
 import com.nutdiary.diary.baselibrary.component.MyLoadDialog;
 import com.nutdiary.diary.baselibrary.component.MyToast;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;

@@ -5,7 +5,7 @@
 
     <application
         tools:replace="android:theme"
-        android:theme="@style/TransparentTheme">
+        android:theme="@style/BaseAppTheme">
         <activity android:name="com.nutdiary.diary.login.login.LoginMainActivity" />
     </application>
 
