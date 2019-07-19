@@ -4,39 +4,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.nutdiary.diary.R;
 import com.nutdiary.diary.baselibrary.base.BaseActivity;
 import com.nutdiary.diary.baselibrary.base.UserData;
-import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.MultiItemTypeAdapter;
 import com.nutdiary.diary.baselibrary.utils.MyPermissionUtils;
 import com.nutdiary.diary.bean.DiaryBean;
 import com.nutdiary.diary.contract.HomeContract;
 import com.nutdiary.diary.presenter.HomePresenter;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.refactor.lib.colordialog.PromptDialog;
 
-public class HomeActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HomeContract.HomeView {
+public class HomeActivity extends BaseActivity implements HomeContract.HomeView {
     private static final int jump2loginRequestCode = 21;
 
     private TextView titleTv;
@@ -46,8 +35,7 @@ public class HomeActivity extends BaseActivity
 
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
-    private NavigationView navView;
-    private DrawerLayout drawerLayout;
+
     private SmartRefreshLayout refreshLayout;
 
     private HomePresenter homePresenter;
@@ -61,7 +49,7 @@ public class HomeActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         //权限请求
         MyPermissionUtils.checkAndRequests(this, 12);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.app_bar_home);
         homePresenter = new HomePresenter(this, this);
         initView();
         initEvent();
@@ -102,12 +90,8 @@ public class HomeActivity extends BaseActivity
             nowPageNumber = 1;
             homePresenter.getFirstListData(nowPageNumber);
         });
-        refreshLayout.setOnLoadMoreListener(refreshLayout -> {
-            homePresenter.getListData(nowPageNumber);
-        });
-
+        commonAdapter.setOnLoadMoreListener(() -> homePresenter.getListData(nowPageNumber));
         refreshLayout.setRefreshHeader(new DeliveryHeader(this));
-        refreshLayout.setRefreshFooter(new BallPulseFooter(this));
     }
 
     private void initView() {
@@ -117,13 +101,10 @@ public class HomeActivity extends BaseActivity
 
         this.recyclerView = findViewById(R.id.recycler_view);
         this.fab = findViewById(R.id.fab);
-        this.navView = findViewById(R.id.nav_view);
-        this.drawerLayout = findViewById(R.id.drawer_layout);
         this.refreshLayout = findViewById(R.id.refreshLayout);
 
 
         initToolBar();
-        initNavigation();
         initRecyclerView();
     }
 
@@ -135,62 +116,6 @@ public class HomeActivity extends BaseActivity
                 ARouter.getInstance().build("/login/LoginMainActivity").navigation();
             }
         });
-    }
-
-    private void initNavigation() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        navView.setNavigationItemSelectedListener(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        // getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_user_center) {
-            //  ARouter.getInstance().build("/plan/PlanActivity").navigation();
-            ARouter.getInstance().build("/login/LoginMainActivity").navigation();
-            // Handle the camera action
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
     }
 
 
@@ -210,8 +135,18 @@ public class HomeActivity extends BaseActivity
     }
 
     @Override
-    public void finishLoadMore() {
-        refreshLayout.finishLoadMore();
+    public void loadMoreComplete() {
+        commonAdapter.loadMoreComplete();
+    }
+
+    @Override
+    public void loadMoreFail() {
+        commonAdapter.loadMoreFail();
+    }
+
+    @Override
+    public void loadMoreEnd() {
+        commonAdapter.loadMoreEnd();
     }
 
     @Override

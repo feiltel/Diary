@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitHelper {
-   // private static final String SERVER_URL = "http://nutstudio.net:8083/diary/";
+    //private static final String SERVER_URL = "http://nutstudio.net:8083/diary/";
     public static final String SERVER_URL = "http://192.168.31.196:8083/diary/";
     private static RetrofitHelper retrofitHelper;
     private Retrofit retrofit;

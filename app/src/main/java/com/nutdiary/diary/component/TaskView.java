@@ -18,13 +18,10 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 
 import com.nutdiary.diary.R;
-import com.nutdiary.diary.bean.ColorTheme;
 import com.nutdiary.diary.bean.CommitsBase;
 import com.nutdiary.diary.bean.Day;
-import com.scwang.smartrefresh.header.waveswipe.DropBounceInterpolator;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TaskView extends View implements View.OnClickListener {
 

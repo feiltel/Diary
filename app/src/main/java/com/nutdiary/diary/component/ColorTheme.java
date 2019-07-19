@@ -1,4 +1,4 @@
-package com.nutdiary.diary.bean;
+package com.nutdiary.diary.component;
 
 import android.graphics.Color;
 

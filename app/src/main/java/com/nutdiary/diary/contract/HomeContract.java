@@ -15,7 +15,10 @@ import io.reactivex.Observable;
  */
 public class HomeContract {
     public interface HomeView extends BaseView{
-        void finishLoadMore();
+        void loadMoreComplete();
+        void loadMoreFail();
+        void loadMoreEnd();
+
         void finishRefresh();
         void clearDataAndRefresh();
         void addDataAndRefresh(List<DiaryBean> mainListItems);

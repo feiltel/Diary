@@ -5,8 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.CommonAdapter;
-import com.nutdiary.diary.baselibrary.component.BaseRecyclerView.baseIn.ViewHolder;
+import com.nutdiary.diary.plan.PlanAdapter;
 import com.nutdiary.diary.plan.R;
 import com.nutdiary.diary.plan.bean.PlanItemBean;
 
@@ -16,7 +15,7 @@ import java.util.List;
 public class PlanActivity extends AppCompatActivity {
 
     private RecyclerView planlistrv;
-    private CommonAdapter adapter;
+    private PlanAdapter adapter;
     private List<PlanItemBean> dataList;
 
     @Override
@@ -28,13 +27,7 @@ public class PlanActivity extends AppCompatActivity {
 
     private void initView() {
         this.planlistrv = findViewById(R.id.plan_list_rv);
-        adapter = new CommonAdapter<PlanItemBean>(this,R.layout.plan_time_item_layout,dataList) {
-
-            @Override
-            protected void convert(ViewHolder holder, PlanItemBean planItemBean, int position) {
-
-            }
-        };
+        adapter = new PlanAdapter(R.layout.plan_time_item_layout, dataList);
     }
 
     @Override

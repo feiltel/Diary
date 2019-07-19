@@ -33,7 +33,12 @@ public class HomePresenter extends BasePresenter {
                 .subscribe(new DefaultObserver<MainListBean>() {  // 订阅
                     @Override
                     public void onNext(@NonNull MainListBean mainListBean) {
-                        homeView.finishLoadMore();
+
+                        if (mainListBean.getList().size()<1){
+                            homeView.loadMoreEnd();
+                        }else {
+                            homeView.loadMoreComplete();
+                        }
                         if (mainListBean.getCode()==0){
                             homeView.addDataAndRefresh(mainListBean.getList());
                         }
@@ -42,7 +47,7 @@ public class HomePresenter extends BasePresenter {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        homeView.finishLoadMore();
+                        homeView.loadMoreFail();
                         homeView.showToast(e.toString());
                     }
 
@@ -72,7 +77,7 @@ public class HomePresenter extends BasePresenter {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        homeView.finishLoadMore();
+                        homeView.loadMoreComplete();
                         homeView.showToast(e.toString());
                     }
 
@@ -93,6 +98,12 @@ public class HomePresenter extends BasePresenter {
                     @Override
                     public void onNext(@NonNull MainListBean mainListBean) {
                         homeView.finishRefresh();
+                        if (mainListBean.getList().size()<1){
+                            homeView.loadMoreEnd();
+                        }else {
+                            homeView.loadMoreComplete();
+                        }
+
                         homeView.clearDataAndRefresh();
                         homeView.addDataAndRefresh(mainListBean.getList());
 

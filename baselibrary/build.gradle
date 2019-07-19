@@ -21,19 +21,16 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     //support
     api rootProject.ext.dependencies.appcompat_v7
     api rootProject.ext.dependencies.support_v4
     api rootProject.ext.dependencies.recyclerview
     api rootProject.ext.dependencies.design
     api rootProject.ext.dependencies.constraint
-
-
     //retrofit
     api rootProject.ext.dependencies.retrofit
     api rootProject.ext.dependencies.converter_gson
@@ -41,28 +38,29 @@ dependencies {
     //rxJava
     api rootProject.ext.dependencies.rxandroid
     api rootProject.ext.dependencies.rxlifecycle_components
-
     ///okHttp
     api rootProject.ext.dependencies.okhttp
     api rootProject.ext.dependencies.logging_interceptor
-
     //加载对话框
     api rootProject.ext.dependencies.kprogresshud
     //下拉刷新
     api rootProject.ext.dependencies.SmartRefreshLayout
     api rootProject.ext.dependencies.SmartRefreshHeader
-
     //心情选择器
     api rootProject.ext.dependencies.smileyrating
     //彩色对话框
     api rootProject.ext.dependencies.ColorDialog
     //侧滑删除
     api rootProject.ext.dependencies.swipeitemlayout
-
+    //路由
     api rootProject.ext.dependencies.arouter_api
+    //recyclerview adapter 扩展类
+    api rootProject.ext.dependencies.CymChad
+    //透明状态栏
+    api rootProject.ext.dependencies.statusbarutil
 
-    api 'com.jaeger.statusbarutil:library:1.5.1'
+    api rootProject.ext.dependencies.multidex
 
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
+    implementation project(':crashlib')
 }
