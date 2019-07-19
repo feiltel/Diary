@@ -10,6 +10,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.nutdiary.diary.R;
+import com.nutdiary.diary.baselibrary.component.MyToast;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        MyToast.showToast(this,"她哦哦哦她哦哦哦她哦哦哦她哦哦哦");
       /*  ImageView imageView=findViewById(R.id.img_im);
         CommitsBase commitsBase=new CommitsBase();
         SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
